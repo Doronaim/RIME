@@ -1,0 +1,57 @@
+﻿@model IEnumerable<RIME.Models.EvidenceComment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<h4>EvidenceComment</h4>
+<p>
+    @Html.ActionLink("Create New", "EvidenceCommentsCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EvidenceId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EvidenceId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EvidenceCommentsEdit", new { id=item.EvidenceCommentId }) |
+            @Html.ActionLink("Details", "EvidenceCommentsDetails", new { id=item.EvidenceCommentId }) |
+            @Html.ActionLink("Delete", "EvidenceCommentsDelete", new { id=item.EvidenceCommentId })
+        </td>
+    </tr>
+}
+
+</table>

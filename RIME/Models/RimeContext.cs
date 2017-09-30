@@ -11,7 +11,7 @@ namespace RIME.Models
         public DbSet<Evidence> Evidences{ get; set; }
         public DbSet<EvidenceComment> EvidenceComments{ get; set; }
         public DbSet<SubComment> SubComments { get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Tag> Tags { get; set; }
     }
 }

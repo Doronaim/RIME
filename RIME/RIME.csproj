@@ -169,18 +169,19 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709221909274_First.cs" />
-    <Compile Include="Migrations\201709221909274_First.Designer.cs">
-      <DependentUpon>201709221909274_First.cs</DependentUpon>
+    <Compile Include="Migrations\201709290903488_FromGit.cs" />
+    <Compile Include="Migrations\201709290903488_FromGit.Designer.cs">
+      <DependentUpon>201709290903488_FromGit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709231516349_Second.cs" />
-    <Compile Include="Migrations\201709231516349_Second.Designer.cs">
-      <DependentUpon>201709231516349_Second.cs</DependentUpon>
+    <Compile Include="Migrations\201709302112575_RemoveUserModel.cs" />
+    <Compile Include="Migrations\201709302112575_RemoveUserModel.Designer.cs">
+      <DependentUpon>201709302112575_RemoveUserModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -191,7 +192,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -253,6 +253,27 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\Blog\Evidence.cshtml" />
+    <Content Include="Views\Manage\Evidence\Index.cshtml" />
+    <Content Include="Views\Manage\Evidence\Edit.cshtml" />
+    <Content Include="Views\Manage\Evidence\Details.cshtml" />
+    <Content Include="Views\Manage\Evidence\Delete.cshtml" />
+    <Content Include="Views\Manage\Evidence\Create.cshtml" />
+    <Content Include="Views\Manage\Tag\Create.cshtml" />
+    <Content Include="Views\Manage\Tag\Delete.cshtml" />
+    <Content Include="Views\Manage\Tag\Details.cshtml" />
+    <Content Include="Views\Manage\Tag\Edit.cshtml" />
+    <Content Include="Views\Manage\Tag\Index.cshtml" />
+    <Content Include="Views\Manage\EvidenceComments\Create.cshtml" />
+    <Content Include="Views\Manage\EvidenceComments\Delete.cshtml" />
+    <Content Include="Views\Manage\EvidenceComments\Details.cshtml" />
+    <Content Include="Views\Manage\EvidenceComments\Edit.cshtml" />
+    <Content Include="Views\Manage\EvidenceComments\Index.cshtml" />
+    <Content Include="Views\Manage\SubComments\Create.cshtml" />
+    <Content Include="Views\Manage\SubComments\Delete.cshtml" />
+    <Content Include="Views\Manage\SubComments\Details.cshtml" />
+    <Content Include="Views\Manage\SubComments\Edit.cshtml" />
+    <Content Include="Views\Manage\SubComments\Index.cshtml" />
+    <Content Include="Views\Gallery\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -266,11 +287,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709221909274_First.resx">
-      <DependentUpon>201709221909274_First.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709290903488_FromGit.resx">
+      <DependentUpon>201709290903488_FromGit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709231516349_Second.resx">
-      <DependentUpon>201709231516349_Second.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709302112575_RemoveUserModel.resx">
+      <DependentUpon>201709302112575_RemoveUserModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
