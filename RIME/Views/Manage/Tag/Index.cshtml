@@ -1,0 +1,45 @@
+﻿@model IEnumerable<RIME.Models.Tag>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<h4>Tag</h4>
+<p>
+    @Html.ActionLink("Create New", "TagCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EvidenceId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TagName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EvidenceId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TagName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "TagEdit", new { id=item.TagId }) |
+            @Html.ActionLink("Details", "TagDetails", new { id=item.TagId }) |
+            @Html.ActionLink("Delete", "TagDelete", new { id=item.TagId })
+        </td>
+    </tr>
+}
+
+</table>

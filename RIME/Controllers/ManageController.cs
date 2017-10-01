@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RIME.Models;
+using System.Net;
+using System.Data.Entity;
 
 namespace RIME.Controllers
 {
@@ -15,6 +17,7 @@ namespace RIME.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private RimeContext db = new RimeContext();
 
         public ManageController()
         {
@@ -318,6 +321,437 @@ namespace RIME.Controllers
             }
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+        }
+
+        // GET: Tags
+        public ActionResult TagIndex()
+        {
+            return View("Tag/Index", db.Tags.ToList());
+        }
+
+
+        // GET: Tags/Details/5
+        public ActionResult TagDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tag tag = db.Tags.Find(id);
+            if (tag == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Tag/Details",tag);
+        }
+
+        // GET: Tags/Create
+        public ActionResult TagCreate()
+        {
+            return View("Tag/Create");
+        }
+
+        // POST: Tags/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TagCreate([Bind(Include = "TagId,EvidenceId,Categoty,TagName")] Tag tag)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Tags.Add(tag);
+                db.SaveChanges();
+                return RedirectToAction("TagIndex");
+            }
+
+            return View(tag);
+        }
+
+        // GET: Tags/Edit/5
+        public ActionResult TagEdit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tag tag = db.Tags.Find(id);
+            if (tag == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Tag/Edit",tag);
+        }
+
+        // POST: Tags/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TagEdit([Bind(Include = "TagId,EvidenceId,Categoty,TagName")] Tag tag)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(tag).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("TagIndex");
+            }
+            return View("Tag/Edit",tag);
+        }
+
+        // GET: Tags/Delete/5
+        public ActionResult TagDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tag tag = db.Tags.Find(id);
+            if (tag == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Tag/Delete",tag);
+        }
+
+        // POST: Tags/Delete/5
+        [HttpPost, ActionName("TagDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Tag tag = db.Tags.Find(id);
+            db.Tags.Remove(tag);
+            db.SaveChanges();
+            return RedirectToAction("TagIndex");
+        }
+
+        // GET: Evidences
+        public ActionResult EvidenceIndex()
+        {
+            return View("Evidence/Index", db.Evidences.ToList());
+        }
+
+
+        // GET: Evidences/Details/5
+        public ActionResult EvidenceDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Evidence evidence = db.Evidences.Find(id);
+            if (evidence == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Evidence/Details",evidence);
+        }
+
+
+        // GET: Evidences/Create
+        public ActionResult CreateEvidence()
+        {
+            return View("Evidence/Create");
+        }
+
+        // POST: Evidences/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEvidence([Bind(Include = "EvidenceId,UserName,EvidencePic,EvidencePath,EvidenceLocation,Title,Prolog,Content,Date,Likes,Quote")] Evidence evidence)
+        {
+            if (ModelState.IsValid)
+            {
+                string[] keys = Request.Form.AllKeys;
+                string[] tokens = User.Identity.Name.Split('@');
+
+                evidence.UserName = tokens[0];
+                db.Evidences.Add(evidence);
+                
+                
+                if (Request.Form[keys[11]] != "")
+                {
+                    string[] values = Request.Form[keys[11]].Split(',');
+                    foreach (var x in values)
+                    {
+                        Tag tg = new Tag();
+
+
+                        tg.EvidenceId = db.Evidences.Local[0].EvidenceId;
+                        tg.TagName = x;
+                        tg.Categoty = Request.Form[keys[12]];
+
+                        db.Tags.Add(tg);
+                    }
+                }
+      
+                db.SaveChanges();
+
+                
+                return RedirectToAction("EvidenceIndex");
+            }
+
+            return View("Evidence/Create",evidence);
+        }
+
+        // GET: Evidences/Edit/5
+        public ActionResult EvidenceEdit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Evidence evidence = db.Evidences.Find(id);
+            if (evidence == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Evidence/Edit",evidence);
+        }
+
+        // POST: Evidences/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EvidenceEdit([Bind(Include = "EvidenceId,UserName,EvidencePic,EvidencePath,EvidenceLocation,Title,Prolog,Content,Date,Likes,Quote")] Evidence evidence)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(evidence).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("EvidenceIndex");
+            }
+            return View("Evidence/Edit",evidence);
+        }
+
+        // GET: Evidences/Delete/5
+        public ActionResult EvidenceDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Evidence evidence = db.Evidences.Find(id);
+            if (evidence == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Evidence/Delete",evidence);
+        }
+
+        // POST: Evidences/Delete/5
+        [HttpPost, ActionName("EvidenceDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EvidenceDeleteConfirmed(int id)
+        {
+            Evidence evidence = db.Evidences.Find(id);
+            db.Evidences.Remove(evidence);
+            db.SaveChanges();
+            return RedirectToAction("EvidenceIndex");
+        }
+
+        // GET: EvidenceComments
+        public ActionResult EvidenceCommentsIndex()
+        {
+            return View("EvidenceComments/Index",db.EvidenceComments.ToList());
+        }
+
+        // GET: EvidenceComments/Details/5
+        public ActionResult EvidenceCommentsDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EvidenceComment evidenceComment = db.EvidenceComments.Find(id);
+            if (evidenceComment == null)
+            {
+                return HttpNotFound();
+            }
+            return View("EvidenceComments/Details", evidenceComment);
+        }
+
+        // GET: EvidenceComments/Create
+        public ActionResult EvidenceCommentsCreate()
+        {
+            return View("EvidenceComments/Create");
+        }
+
+        // POST: EvidenceComments/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EvidenceCommentsCreate([Bind(Include = "EvidenceCommentId,EvidenceId,Name,Email,Date,Content")] EvidenceComment evidenceComment)
+        {
+            if (ModelState.IsValid)
+            {
+                db.EvidenceComments.Add(evidenceComment);
+                db.SaveChanges();
+                return RedirectToAction("EvidenceCommentIndex");
+            }
+
+            return View("EvidenceComments/Create", evidenceComment);
+        }
+
+        // GET: EvidenceComments/Edit/5
+        public ActionResult EvidenceCommentsEdit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EvidenceComment evidenceComment = db.EvidenceComments.Find(id);
+            if (evidenceComment == null)
+            {
+                return HttpNotFound();
+            }
+            return View("EvidenceComments/Edit", evidenceComment);
+        }
+
+        // POST: EvidenceComments/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EvidenceCommentsEdit([Bind(Include = "EvidenceCommentId,EvidenceId,Name,Email,Date,Content")] EvidenceComment evidenceComment)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(evidenceComment).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("EvidenceCommentsIndex");
+            }
+            return View("EvidenceComments/Edit", evidenceComment);
+        }
+
+        // GET: EvidenceComments/Delete/5
+        public ActionResult EvidenceCommentsDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EvidenceComment evidenceComment = db.EvidenceComments.Find(id);
+            if (evidenceComment == null)
+            {
+                return HttpNotFound();
+            }
+            return View("EvidenceComments/Delete", evidenceComment);
+        }
+
+        // POST: EvidenceComments/Delete/5
+        [HttpPost, ActionName("EvidenceCommentsDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EvidenceCommentsDeleteConfirmed(int id)
+        {
+            EvidenceComment evidenceComment = db.EvidenceComments.Find(id);
+            db.EvidenceComments.Remove(evidenceComment);
+            db.SaveChanges();
+            return RedirectToAction("EvidenceCommentsIndex");
+        }
+
+        // GET: SubComments
+        public ActionResult SubCommentsIndex()
+        {
+            return View("SubComments/Index", db.SubComments.ToList());
+        }
+
+        // GET: SubComments/Details/5
+        public ActionResult SubCommentsDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SubComment subComment = db.SubComments.Find(id);
+            if (subComment == null)
+            {
+                return HttpNotFound();
+            }
+            return View("SubComments/Details", subComment);
+        }
+
+        // GET: SubComments/Create
+        public ActionResult SubCommentsCreate()
+        {
+            return View("SubComments/Create");
+        }
+
+        // POST: SubComments/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubCommentsCreate([Bind(Include = "SubCommentId,EvidenceCommentId,Name,Email,Date,Content")] SubComment subComment)
+        {
+            if (ModelState.IsValid)
+            {
+                db.SubComments.Add(subComment);
+                db.SaveChanges();
+                return RedirectToAction("SubCommentsIndex");
+            }
+
+            return View("SubComments/Create", subComment);
+        }
+
+        // GET: SubComments/Edit/5
+        public ActionResult SubCommentsEdit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SubComment subComment = db.SubComments.Find(id);
+            if (subComment == null)
+            {
+                return HttpNotFound();
+            }
+            return View("SubComments/Edit", subComment);
+        }
+
+        // POST: SubComments/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubCommentsEdit([Bind(Include = "SubCommentId,EvidenceCommentId,Name,Email,Date,Content")] SubComment subComment)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(subComment).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("SubCommentsIndex");
+            }
+            return View("SubComments/Edit", subComment);
+        }
+
+        // GET: SubComments/Delete/5
+        public ActionResult SubCommentsDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SubComment subComment = db.SubComments.Find(id);
+            if (subComment == null)
+            {
+                return HttpNotFound();
+            }
+            return View("SubComments/Delete", subComment);
+        }
+
+        // POST: SubComments/Delete/5
+        [HttpPost, ActionName("SubCommentsDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubCommentsDeleteConfirmed(int id)
+        {
+            SubComment subComment = db.SubComments.Find(id);
+            db.SubComments.Remove(subComment);
+            db.SaveChanges();
+            return RedirectToAction("SubCommentsIndex");
         }
 
         protected override void Dispose(bool disposing)

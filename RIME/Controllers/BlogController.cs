@@ -13,12 +13,12 @@ namespace RIME.Controllers
         private RimeContext db = new RimeContext();
         public string Dummy()
         {
-            var users = new List<User>
-            {
-                new User { UserName="Admin", FirstName="Doron", LastName="Naim", UserHash="Password", Country="Israel", DOB=DateTime.Now.Date, Photo="/img/gallery/users/admin.jpg", Summary="The one and only - I'm the Admin of this site"},
-                new User { UserName="Guest", FirstName="Eran", LastName="Lunenfeld", UserHash="Password", Country="Palastine", DOB=DateTime.Now.Date, Photo="/img/gallery/users/guest.jpg", Summary="The one and not the only - I'm the Guest of this site"},
+            //var users = new List<User>
+            //{
+            //    new User { UserName="Admin", FirstName="Doron", LastName="Naim", UserHash="Password", Country="Israel", DOB=DateTime.Now.Date, Photo="/img/gallery/users/admin.jpg", Summary="The one and only - I'm the Admin of this site"},
+            //    new User { UserName="Guest", FirstName="Eran", LastName="Lunenfeld", UserHash="Password", Country="Palastine", DOB=DateTime.Now.Date, Photo="/img/gallery/users/guest.jpg", Summary="The one and not the only - I'm the Guest of this site"},
 
-            };
+            //};
 
             
 
@@ -51,8 +51,8 @@ namespace RIME.Controllers
 
             };
 
-            users.ForEach(s => db.Users.Add(s));
-            db.SaveChanges();
+            //users.ForEach(s => db.Users.Add(s));
+            //db.SaveChanges();
             evidences.ForEach(s => db.Evidences.Add(s));
             db.SaveChanges();
             comments.ForEach(s => db.EvidenceComments.Add(s));
