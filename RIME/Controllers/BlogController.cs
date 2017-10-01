@@ -99,5 +99,22 @@ namespace RIME.Controllers
             db.SaveChanges();
             return RedirectToAction("Evidence/"+com.EvidenceId);
         }
+
+        public ActionResult GetEvidences()
+        {
+            EvidenceComment com = new EvidenceComment();
+
+            string[] keys = Request.Form.AllKeys;
+            com.EvidenceId = int.Parse(Request.Form.Keys[3]);
+            com.Name = Request.Form[keys[0]];
+            com.Email = Request.Form[keys[1]];
+            com.Date = DateTime.Now.Date;
+
+            com.Content = Request.Form[keys[2]];
+            db.EvidenceComments.Add(com);
+            db.SaveChanges();
+            return RedirectToAction("Evidence/" + com.EvidenceId);
+        }
+
     }
 }
