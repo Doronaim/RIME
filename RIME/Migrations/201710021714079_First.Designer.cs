@@ -7,13 +7,13 @@ namespace RIME.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class FromGit : IMigrationMetadata
+    public sealed partial class First : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FromGit));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(First));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709290903488_FromGit"; }
+            get { return "201710021714079_First"; }
         }
         
         string IMigrationMetadata.Source

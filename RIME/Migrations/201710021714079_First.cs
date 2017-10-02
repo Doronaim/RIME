@@ -3,7 +3,7 @@ namespace RIME.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FromGit : DbMigration
+    public partial class First : DbMigration
     {
         public override void Up()
         {
@@ -68,21 +68,6 @@ namespace RIME.Migrations
                 .ForeignKey("dbo.Evidences", t => t.EvidenceId, cascadeDelete: true)
                 .Index(t => t.EvidenceId);
             
-            CreateTable(
-                "dbo.Users",
-                c => new
-                    {
-                        UserName = c.String(nullable: false, maxLength: 128),
-                        UserHash = c.String(),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        Country = c.String(),
-                        DOB = c.DateTime(nullable: false),
-                        Summary = c.String(),
-                        Photo = c.String(),
-                    })
-                .PrimaryKey(t => t.UserName);
-            
         }
         
         public override void Down()
@@ -93,7 +78,6 @@ namespace RIME.Migrations
             DropIndex("dbo.Tags", new[] { "EvidenceId" });
             DropIndex("dbo.SubComments", new[] { "EvidenceCommentId" });
             DropIndex("dbo.EvidenceComments", new[] { "EvidenceId" });
-            DropTable("dbo.Users");
             DropTable("dbo.Tags");
             DropTable("dbo.Evidences");
             DropTable("dbo.SubComments");
