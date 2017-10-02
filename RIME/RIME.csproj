@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -175,13 +176,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709290903488_FromGit.cs" />
-    <Compile Include="Migrations\201709290903488_FromGit.Designer.cs">
-      <DependentUpon>201709290903488_FromGit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709302112575_RemoveUserModel.cs" />
-    <Compile Include="Migrations\201709302112575_RemoveUserModel.Designer.cs">
-      <DependentUpon>201709302112575_RemoveUserModel.cs</DependentUpon>
+    <Compile Include="Migrations\201710021630268_Eran2.cs" />
+    <Compile Include="Migrations\201710021630268_Eran2.Designer.cs">
+      <DependentUpon>201710021630268_Eran2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -287,11 +284,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709290903488_FromGit.resx">
-      <DependentUpon>201709290903488_FromGit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709302112575_RemoveUserModel.resx">
-      <DependentUpon>201709302112575_RemoveUserModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710021630268_Eran2.resx">
+      <DependentUpon>201710021630268_Eran2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
