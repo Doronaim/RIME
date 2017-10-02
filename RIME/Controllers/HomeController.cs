@@ -28,5 +28,11 @@ namespace RIME.Controllers
 
             return View();
         }
+
+        public ActionResult GetAllEvidenses()
+        {
+            List<Evidence> list = db.Evidences.ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
     }
 }
