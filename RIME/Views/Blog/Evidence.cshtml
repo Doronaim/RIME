@@ -144,8 +144,11 @@
                 <!--Search-->
                 <section>
                     <div class="input-append">
-                        <form action="#">
-                            <input id="appendedInputButton" size="16" type="text" placeholder="Search"><button class="btn" type="button"><i class="icon-search"></i></button>
+                        <form method="post" action="/Blog/Index/">
+                            <input id="title" name="title" size="16" type="text" placeholder="Title"><button id="submit" class="btn" type="submit"><i class="icon-search"></i></button><!--<button class="btn" type="submit"><i class="icon-filter"></i></button>-->
+                            <br /><input id="author" name="author" size="16" type="text" placeholder="Author">
+                            <br /><input id="content" name="content" size="16" type="text" placeholder="Content">
+                            <br /><input id="date" name="date" size="16" type="date" placeholder="Dates">
                         </form>
                     </div>
                 </section>
