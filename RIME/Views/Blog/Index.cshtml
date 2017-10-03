@@ -43,7 +43,7 @@
             ================================================== -->
             <div class="span8 blog">
                 <!-- Blog Post 1 -->
-                @foreach (var item in Model)
+                @foreach (var item in Model.Reverse())
                 {
                     <article>
                         <div class="row">
@@ -153,8 +153,11 @@
                     </div>
                 </div>
                 <!--Video Widget-->
-                <h5 class="title-bg">Video Widget</h5>
-                <iframe src="http://player.vimeo.com/video/24496773" width="370" height="208"></iframe>
+                <h5 class="title-bg">Video of The Month</h5>
+                <video width="370" height="208" controls>
+                    <source src="/img/videos/IsraelHistory.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </div>
 

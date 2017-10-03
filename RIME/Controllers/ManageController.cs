@@ -467,6 +467,7 @@ namespace RIME.Controllers
                 string[] tokens = User.Identity.Name.Split('@');
 
                 evidence.UserName = tokens[0];
+                
                 db.Evidences.Add(evidence);
                 
                 
