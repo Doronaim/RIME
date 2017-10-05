@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using RIME.Models;
 using System.Net;
+using LinqToTwitter;
+using System.Threading.Tasks;
 
 namespace RIME.Controllers
 {
@@ -113,6 +115,33 @@ namespace RIME.Controllers
             db.SubComments.Add(com);
             db.SaveChanges();
             return RedirectToAction("Evidence/" + com.EvidenceCommentId);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetTweets()
+        {
+            var auth = new ApplicationOnlyAuthorizer()
+            {
+                CredentialStore = new InMemoryCredentialStore()
+                {
+                    ConsumerKey = "82zN11OQVwqsOINZkJAdd3riP",
+                    ConsumerSecret = "99mXIHxfwRtstF2nIBNaqsVe3hAdiUERZEeIULs0eXfsp2Khvf"
+                }
+            };
+
+            await auth.AuthorizeAsync();
+
+            var twitterCtx = new TwitterContext(auth);
+                
+          
+            var srch =
+                    await
+            (from search in twitterCtx.Search
+             where search.Type == SearchType.Search &&
+                   search.Query == "MiddleEast"
+             select search)
+            .SingleOrDefaultAsync();
+            return Json(srch.Statuses.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }
