@@ -9,6 +9,21 @@
 <p>
     @Html.ActionLink("Create New", "EvidenceCommentsCreate")
 </p>
+
+ <!--Search-->
+<section>
+    <div class="input-append">
+        <form method="post" action="/Manage/EvidenceCommentsIndex">
+            
+            @*<br />*@<input id="author" name="author" size="16" type="text" placeholder="Author">
+            <input id="email" name="email" size="16" type="text" placeholder="Email">
+            @*<br />*@<input id="content" name="content" size="16" type="text" placeholder="Content">
+            @*<br />*@<input id="date" name="date" size="16" type="date" placeholder="Dates">
+            <button id="submit" class="btn" type="submit"><i class="icon-search"></i></button>
+        </form>
+    </div>
+</section>
+
 <table class="table">
     <tr>
         <th>
