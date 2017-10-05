@@ -1,4 +1,4 @@
-﻿.marquee_container {
+﻿.container-marquee {
     width: inherit;
     background: #5882FA;
     float: left;
@@ -12,7 +12,7 @@
 
 .marquee-sibling {
     padding: 0;
-    background: #3BB0D6;
+    background: #3352ab;
     width: 20%;
     height: 45px;
     line-height: 42px;
@@ -43,13 +43,13 @@
     position: relative;
 }
 
-    .marquee-content-items li {
-        display: inline-block;
-        line-height: 35px;
-        color: #fff;
-    }
+.marquee-content-items li {
+    display: inline-block;
+    line-height: 35px;
+    color: #fff;
+}
 
-        .marquee-content-items li:after {
-            content: "|";
-            margin: 0 1em;
-        }
+.marquee-content-items li:after {
+    content: "|";
+    margin: 0 1em;
+}
