@@ -99,5 +99,20 @@ namespace RIME.Controllers
             db.SaveChanges();
             return RedirectToAction("Evidence/"+com.EvidenceId);
         }
+        public ActionResult PostSubComment()
+        {
+            SubComment com = new SubComment();
+
+            string[] keys = Request.Form.AllKeys;
+            com.EvidenceCommentId = int.Parse(Request.Form.Keys[3]);
+            com.Name = Request.Form[keys[0]];
+            com.Email = Request.Form[keys[1]];
+            com.Date = DateTime.Now.Date;
+
+            com.Content = Request.Form[keys[2]];
+            db.SubComments.Add(com);
+            db.SaveChanges();
+            return RedirectToAction("Evidence/" + com.EvidenceCommentId);
+        }
     }
 }
