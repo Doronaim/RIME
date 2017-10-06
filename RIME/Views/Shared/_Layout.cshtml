@@ -104,6 +104,8 @@ $(document).ready(function () {
                         </li>
                         <li><a href="/Blog">Blog</a></li>
                         @if (User.Identity.IsAuthenticated) {
+                                        if (User.IsInRole("Admin")){
+
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="/Manage">Manage <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -115,6 +117,7 @@ $(document).ready(function () {
                                 <li><a href="page-double-sidebar.htm">Statistics</a></li>
                             </ul>
                         </li>
+                        }
                         }
                         <li><a href="page-contact.htm">Contact</a></li>
                         @Html.Partial("_LoginPartial")

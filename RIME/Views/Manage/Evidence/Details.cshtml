@@ -1,0 +1,98 @@
+﻿@model RIME.Models.Evidence
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Evidence</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EvidencePic)
+        </dt>
+
+        <dd>
+            <img src=" @Html.DisplayFor(model => model.EvidencePic)" alt=" @Html.DisplayFor(model => model.EvidencePic)">
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EvidencePath)
+        </dt>
+
+        <dd>
+            <iframe src="@Html.DisplayFor(model => model.EvidencePath)" width="368" height="350"></iframe>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EvidenceLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EvidenceLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Prolog)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Prolog)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Likes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Likes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quote)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EvidenceEdit", new { id = Model.EvidenceId }) |
+    @Html.ActionLink("Back to List", "EvidenceIndex")
+</p>

@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using RIME.Models;
 using System.Net;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace RIME.Controllers
 {
@@ -19,6 +20,25 @@ namespace RIME.Controllers
         private ApplicationUserManager _userManager;
         private RimeContext db = new RimeContext();
 
+        public Boolean isAdminUser()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                ApplicationDbContext context = new ApplicationDbContext();
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var s = UserManager.GetRoles(user.GetUserId());
+                if (s[0].ToString() == "Admin")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
         public ManageController()
         {
         }
@@ -324,15 +344,33 @@ namespace RIME.Controllers
         }
 
         // GET: Tags
-        public ActionResult TagIndex()
+        public ActionResult TagIndex(string name, string category)
         {
-            return View("Tag/Index", db.Tags.ToList());
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
+            var tags = from e in db.Tags select e;
+
+
+            if (!String.IsNullOrEmpty(name))
+            {
+                tags = tags.Where(e => e.TagName.Contains(name));
+            }
+
+            if (!String.IsNullOrEmpty(category))
+            {
+                tags = tags.Where(e => e.Categoty.Contains(category));
+            }
+
+     
+            return View("Tag/Index", tags.ToList());
         }
 
 
         // GET: Tags/Details/5
         public ActionResult TagDetails(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -348,6 +386,8 @@ namespace RIME.Controllers
         // GET: Tags/Create
         public ActionResult TagCreate()
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             return View("Tag/Create");
         }
 
@@ -358,6 +398,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TagCreate([Bind(Include = "TagId,EvidenceId,Categoty,TagName")] Tag tag)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (ModelState.IsValid)
             {
                 db.Tags.Add(tag);
@@ -371,6 +413,8 @@ namespace RIME.Controllers
         // GET: Tags/Edit/5
         public ActionResult TagEdit(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -390,6 +434,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TagEdit([Bind(Include = "TagId,EvidenceId,Categoty,TagName")] Tag tag)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (ModelState.IsValid)
             {
                 db.Entry(tag).State = EntityState.Modified;
@@ -402,6 +448,8 @@ namespace RIME.Controllers
         // GET: Tags/Delete/5
         public ActionResult TagDelete(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -419,6 +467,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             Tag tag = db.Tags.Find(id);
             db.Tags.Remove(tag);
             db.SaveChanges();
@@ -426,15 +476,42 @@ namespace RIME.Controllers
         }
 
         // GET: Evidences
-        public ActionResult EvidenceIndex()
+        public ActionResult EvidenceIndex(string title, string author, string content, string date)
         {
-            return View("Evidence/Index", db.Evidences.ToList());
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
+            var evidences = from e in db.Evidences select e;
+
+            if (!String.IsNullOrEmpty(title))
+            {
+                evidences = evidences.Where(e => e.Title.Contains(title));
+            }
+
+            if (!String.IsNullOrEmpty(author))
+            {
+                evidences = evidences.Where(e => e.UserName.Contains(author));
+            }
+
+            if (!String.IsNullOrEmpty(content))
+            {
+                evidences = evidences.Where(e => e.Content.Contains(content));
+            }
+
+            if (!String.IsNullOrEmpty(date))
+            {
+                var dt = Convert.ToDateTime(date);
+                evidences = evidences.Where(e => e.Date == dt);
+
+            }
+            return View("Evidence/Index", evidences.ToList());
         }
 
 
         // GET: Evidences/Details/5
         public ActionResult EvidenceDetails(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -451,6 +528,8 @@ namespace RIME.Controllers
         // GET: Evidences/Create
         public ActionResult CreateEvidence()
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             return View("Evidence/Create");
         }
 
@@ -461,12 +540,15 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateEvidence([Bind(Include = "EvidenceId,UserName,EvidencePic,EvidencePath,EvidenceLocation,Title,Prolog,Content,Date,Likes,Quote")] Evidence evidence)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (ModelState.IsValid)
             {
                 string[] keys = Request.Form.AllKeys;
                 string[] tokens = User.Identity.Name.Split('@');
 
                 evidence.UserName = tokens[0];
+                
                 db.Evidences.Add(evidence);
                 
                 
@@ -498,6 +580,8 @@ namespace RIME.Controllers
         // GET: Evidences/Edit/5
         public ActionResult EvidenceEdit(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -517,6 +601,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EvidenceEdit([Bind(Include = "EvidenceId,UserName,EvidencePic,EvidencePath,EvidenceLocation,Title,Prolog,Content,Date,Likes,Quote")] Evidence evidence)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (ModelState.IsValid)
             {
                 db.Entry(evidence).State = EntityState.Modified;
@@ -529,6 +615,8 @@ namespace RIME.Controllers
         // GET: Evidences/Delete/5
         public ActionResult EvidenceDelete(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -546,6 +634,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EvidenceDeleteConfirmed(int id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             Evidence evidence = db.Evidences.Find(id);
             db.Evidences.Remove(evidence);
             db.SaveChanges();
@@ -553,14 +643,42 @@ namespace RIME.Controllers
         }
 
         // GET: EvidenceComments
-        public ActionResult EvidenceCommentsIndex()
+        public ActionResult EvidenceCommentsIndex(string author, string email, string content, string date)
         {
-            return View("EvidenceComments/Index",db.EvidenceComments.ToList());
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
+            var comments = from e in db.EvidenceComments select e;
+
+
+            if (!String.IsNullOrEmpty(author))
+            {
+                comments = comments.Where(e => e.Name.Contains(author));
+            }
+
+            if (!String.IsNullOrEmpty(email))
+            {
+                comments = comments.Where(e => e.Email.Contains(email));
+            }
+
+            if (!String.IsNullOrEmpty(content))
+            {
+                comments = comments.Where(e => e.Content.Contains(content));
+            }
+
+            if (!String.IsNullOrEmpty(date))
+            {
+                var dt = Convert.ToDateTime(date);
+                comments = comments.Where(e => e.Date == dt);
+
+            }
+            return View("EvidenceComments/Index", comments.ToList());
         }
 
         // GET: EvidenceComments/Details/5
         public ActionResult EvidenceCommentsDetails(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -576,6 +694,8 @@ namespace RIME.Controllers
         // GET: EvidenceComments/Create
         public ActionResult EvidenceCommentsCreate()
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             return View("EvidenceComments/Create");
         }
 
@@ -586,6 +706,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EvidenceCommentsCreate([Bind(Include = "EvidenceCommentId,EvidenceId,Name,Email,Date,Content")] EvidenceComment evidenceComment)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (ModelState.IsValid)
             {
                 db.EvidenceComments.Add(evidenceComment);
@@ -599,6 +721,8 @@ namespace RIME.Controllers
         // GET: EvidenceComments/Edit/5
         public ActionResult EvidenceCommentsEdit(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -618,6 +742,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EvidenceCommentsEdit([Bind(Include = "EvidenceCommentId,EvidenceId,Name,Email,Date,Content")] EvidenceComment evidenceComment)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (ModelState.IsValid)
             {
                 db.Entry(evidenceComment).State = EntityState.Modified;
@@ -630,6 +756,8 @@ namespace RIME.Controllers
         // GET: EvidenceComments/Delete/5
         public ActionResult EvidenceCommentsDelete(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -647,6 +775,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EvidenceCommentsDeleteConfirmed(int id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             EvidenceComment evidenceComment = db.EvidenceComments.Find(id);
             db.EvidenceComments.Remove(evidenceComment);
             db.SaveChanges();
@@ -654,14 +784,42 @@ namespace RIME.Controllers
         }
 
         // GET: SubComments
-        public ActionResult SubCommentsIndex()
+        public ActionResult SubCommentsIndex(string author, string email, string content, string date)
         {
-            return View("SubComments/Index", db.SubComments.ToList());
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
+            var comments = from e in db.SubComments select e;
+
+
+            if (!String.IsNullOrEmpty(author))
+            {
+                comments = comments.Where(e => e.Name.Contains(author));
+            }
+
+            if (!String.IsNullOrEmpty(email))
+            {
+                comments = comments.Where(e => e.Email.Contains(email));
+            }
+
+            if (!String.IsNullOrEmpty(content))
+            {
+                comments = comments.Where(e => e.Content.Contains(content));
+            }
+
+            if (!String.IsNullOrEmpty(date))
+            {
+                var dt = Convert.ToDateTime(date);
+                comments = comments.Where(e => e.Date == dt);
+
+            }
+            return View("SubComments/Index", comments.ToList());
         }
 
         // GET: SubComments/Details/5
         public ActionResult SubCommentsDetails(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -677,6 +835,8 @@ namespace RIME.Controllers
         // GET: SubComments/Create
         public ActionResult SubCommentsCreate()
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             return View("SubComments/Create");
         }
 
@@ -687,6 +847,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubCommentsCreate([Bind(Include = "SubCommentId,EvidenceCommentId,Name,Email,Date,Content")] SubComment subComment)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (ModelState.IsValid)
             {
                 db.SubComments.Add(subComment);
@@ -700,6 +862,8 @@ namespace RIME.Controllers
         // GET: SubComments/Edit/5
         public ActionResult SubCommentsEdit(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -719,6 +883,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubCommentsEdit([Bind(Include = "SubCommentId,EvidenceCommentId,Name,Email,Date,Content")] SubComment subComment)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (ModelState.IsValid)
             {
                 db.Entry(subComment).State = EntityState.Modified;
@@ -731,6 +897,8 @@ namespace RIME.Controllers
         // GET: SubComments/Delete/5
         public ActionResult SubCommentsDelete(int? id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -748,6 +916,8 @@ namespace RIME.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubCommentsDeleteConfirmed(int id)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             SubComment subComment = db.SubComments.Find(id);
             db.SubComments.Remove(subComment);
             db.SaveChanges();

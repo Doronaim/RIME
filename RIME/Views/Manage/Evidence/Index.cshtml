@@ -1,0 +1,101 @@
+﻿@model IEnumerable<RIME.Models.Evidence>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<h4>Evidence</h4>
+<p>
+    @Html.ActionLink("Create New", "CreateEvidence")
+</p>
+
+ <!--Search-->
+<section>
+    <div class="input-append">
+        <form method="post" action="/Manage/EvidenceIndex">
+            <input id="title" name="title" size="16" type="text" placeholder="Title">
+            @*<br />*@<input id="author" name="author" size="16" type="text" placeholder="Author">
+            @*<br />*@<input id="content" name="content" size="16" type="text" placeholder="Content">
+            @*<br />*@<input id="date" name="date" size="16" type="date" placeholder="Dates">
+            <button id="submit" class="btn" type="submit"><i class="icon-search"></i></button>
+        </form>
+    </div>
+</section>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EvidencePic)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EvidencePath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EvidenceLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prolog)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Likes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quote)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EvidencePic)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EvidencePath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EvidenceLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Prolog)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Likes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quote)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EvidenceEdit", new { id=item.EvidenceId }) |
+            @Html.ActionLink("Details", "EvidenceDetails", new { id=item.EvidenceId }) |
+            @Html.ActionLink("Delete", "EvidenceDelete", new { id=item.EvidenceId })
+        </td>
+    </tr>
+}
+
+</table>
