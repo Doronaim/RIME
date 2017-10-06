@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<RIME.Models.Evidence>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Blog</title>
@@ -11,7 +10,6 @@
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/bootstrap-responsive.css">
-    <link rel="stylesheet" href="/css/jquery.lightbox-0.5.css">
     <link rel="stylesheet" href="/css/custom-styles.css">
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -25,17 +23,18 @@
     <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
     <!-- JS
     ================================================== -->
-    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/jquery.custom.js"></script>
-
+    <script type="text/javascript" src="~/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="~/js/jquery.ticker.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/jquery.flexslider.js"></script>
 </head>
 <body>
-    
+
 
     <div class="container main-container">
 
-        
+
         <!-- Blog Content
         ================================================== -->
         <div class="row">
@@ -53,12 +52,12 @@
 
                                     <li><i class="icon-user"></i> <a href="#">@item.UserName</a></li>
                                     <li><i class="icon-comment"></i> <a href="#">@item.Comments.Count</a></li>
-                                    <li><i class="icon-tags"></i> 
+                                    <li><i class="icon-tags"></i>
                                         @foreach (var tag in item.Tags) {
-                                        
-                                            <a href="#">@tag.TagName</a> 
+
+                                            <a href="#">@tag.TagName</a>
                                         }
-                                        
+
                                     </li>
                                 </ul>
                                 <button class="btn btn-small btn-inverse" type="button">Read more</button>
@@ -71,7 +70,7 @@
                         </div>
                     </article>
                 }
-               
+
                 <!-- Pagination -->
                 <div class="pagination">
                     <ul>
@@ -126,34 +125,36 @@
                 </ul>
                 <!--Tabbed Content-->
                 <h5 class="title-bg">More Info</h5>
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#comments" data-toggle="tab">Comments</a></li>
-                    <li><a href="#tweets" data-toggle="tab">Tweets</a></li>
-                    <li><a href="#about" data-toggle="tab">About</a></li>
+                <ul id="tweet_tab" class="nav nav-tabs">
+                    <li class="active"><a href="#tweets" data-toggle="tab">Tweets</a></li>
                 </ul>
+                <script type="text/javascript">
+                    $(function () {
+                        $listContainer = $("#tweets_list");
+                        $.getJSON("/Blog/GetTweets", function (result) {
+                            $.each(result, function (i, field) {
+                                var value = new Date(parseInt(field.CreatedAt.replace("/Date(", "").replace(")/", ""), 10));
+                                var date = value.toLocaleString();
+                                $listContainer.append('<li><a href="#"><i class="icon-share-alt"></i> '+ field.User.ScreenNameResponse +" </a>" + field.Text + " | " + date + " </li>");
+                            });
+
+                            $('#tweets').vTicker('init', {
+                                speed: 2000,
+                                pause: 1000,
+                                showItems: 5,
+                                padding: 4
+                            });
+                        });
+                    });
+
+                </script>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="comments">
-                        <ul>
-                            <li><i class="icon-comment"></i>admin on <a href="#">Lorem ipsum dolor sit amet</a></li>
-                            <li><i class="icon-comment"></i>admin on <a href="#">Consectetur adipiscing elit</a></li>
-                            <li><i class="icon-comment"></i>admin on <a href="#">Ipsum dolor sit amet consectetur</a></li>
-                            <li><i class="icon-comment"></i>admin on <a href="#">Aadipiscing elit varius elementum</a></li>
-                            <li><i class="icon-comment"></i>admin on <a href="#">ulla iaculis mattis lorem</a></li>
+                    <div class="tab-pane active" id="tweets">
+                        <ul id="tweets_list">
+                          
                         </ul>
                     </div>
-                    <div class="tab-pane" id="tweets">
-                        <ul>
-                            <li><a href="#"><i class="icon-share-alt"></i>#room122</a> Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna.</li>
-                            <li><a href="#"> <i class="icon-share-alt"></i>#room122</a> Nulla faucibus ligula eget ante varius ac euismod odio placerat.</li>
-                            <li><a href="#"> <i class="icon-share-alt"></i>#room122</a> Pellentesque iaculis lacinia leo. Donec suscipit, lectus et hendrerit posuere, dui nisi porta risus, eget adipiscing</li>
-                            <li><a href="#"> <i class="icon-share-alt"></i>#room122</a> Vivamus augue nulla, vestibulum ac ultrices posuere, vehicula ac arcu.</li>
-                            <li><a href="#"> <i class="icon-share-alt"></i>#room122</a> Sed ac neque nec leo condimentum rhoncus. Nunc dapibus odio et lacus.</li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane" id="about">
-                        <p>Enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.</p>
-                        Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                    </div>
+                  
                 </div>
                 <!--Video Widget-->
                 <h5 class="title-bg">Video of The Month</h5>
