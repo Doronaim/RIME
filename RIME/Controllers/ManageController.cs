@@ -754,6 +754,12 @@ namespace RIME.Controllers
             return RedirectToAction("SubCommentsIndex");
         }
 
+        // GET: Evidences
+        public ActionResult EvidenceStatistics()
+        {
+            return View("Evidence/Statistics", db.Evidences.ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
