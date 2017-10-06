@@ -9,6 +9,18 @@
 <p>
     @Html.ActionLink("Create New", "TagCreate")
 </p>
+
+ <!--Search-->
+<section>
+    <div class="input-append">
+        <form method="post" action="/Manage/TagIndex">
+            @*<br />*@<input id="category" name="category" size="16" type="text" placeholder="Category">
+            @*<br />*@<input id="name" name="name" size="16" type="text" placeholder="Name">
+            <button id="submit" class="btn" type="submit"><i class="icon-search"></i></button>
+        </form>
+    </div>
+</section>
+
 <table class="table">
     <tr>
         <th>
