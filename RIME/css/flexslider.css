@@ -78,3 +78,6 @@ html[xmlns] .slides {display: block;}
   .flex-direction-nav .flex-prev {opacity: 1; left: 0;}
   .flex-direction-nav .flex-next {opacity: 1; right: 0;}
 }
+.slider-image {
+    height: 450px;
+}
