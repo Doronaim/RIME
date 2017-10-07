@@ -55,11 +55,11 @@
         <div class="span8">
             <div class="flexslider">
                 <ul class="slides">
-                    <li><a href="gallery-single.htm"><img class="slider-image" src="/img/gallery/slide1.jpg" alt="slider" /></a></li>
-                    <li><a href="gallery-single.htm"><img class="slider-image" src="/img/gallery/slide2.jpg" alt="slider" /></a></li>
-                    <li><a href="gallery-single.htm"><img class="slider-image" src="/img/gallery/slide5.jpg" alt="slider" /></a></li>
-                    <li><a href="gallery-single.htm"><img class="slider-image" src="/img/gallery/slide4.jpg" alt="slider" /></a></li>
-                    <li><a href="gallery-single.htm"><img class="slider-image" src="/img/gallery/slide3.jpg" alt="slider" /></a></li>
+                    <li><a href="#"><img class="slider-image" src="/img/gallery/slide1.jpg" alt="slider" /></a></li>
+                    <li><a href="#"><img class="slider-image" src="/img/gallery/slide2.jpg" alt="slider" /></a></li>
+                    <li><a href="#"><img class="slider-image" src="/img/gallery/slide5.jpg" alt="slider" /></a></li>
+                    <li><a href="#"><img class="slider-image" src="/img/gallery/slide4.jpg" alt="slider" /></a></li>
+                    <li><a href="#"><img class="slider-image" src="/img/gallery/slide3.jpg" alt="slider" /></a></li>
                 </ul>
             </div>
             <div class="container-marquee">
@@ -81,7 +81,7 @@
             </h3>
             <p class="lead">We collected highly valuated videos about the happening in the Middle East.</p>
             <p>Things you see from there, not necessary reflects the truth.</p>
-            <a href="#"><i class="icon-plus-sign"></i>Read More</a>
+            <a href="/Blog"><i class="icon-plus-sign"></i>Read More</a>
         </div>
     </div><!-- End Headline -->
 
@@ -147,7 +147,7 @@
                             <!-- Carousel items -->
                             <div class="carousel-inner">
                                 
-                                @foreach (var evidence in Model.Reverse().Take(5)) {
+                                @foreach (var evidence in Model.Reverse().Take(6)) {
                                     if (evidence.EvidenceId % 5 == 0)
                                     {
                                         <div class="active item">

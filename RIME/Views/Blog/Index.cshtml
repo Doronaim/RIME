@@ -55,15 +55,15 @@
                                     <li><i class="icon-tags"></i>
                                         @foreach (var tag in item.Tags) {
 
-                                            <a href="#">@tag.TagName</a>
+                                            <a target="_blank" href="http://google.com/search?q=@tag.TagName">@tag.TagName</a>
                                         }
 
                                     </li>
                                 </ul>
-                                <button class="btn btn-small btn-inverse" type="button">Read more</button>
+                                @*<button class="btn btn-small btn-inverse" type="button">Read more</button>*@
                             </div>
                             <div class="span6">
-                                <a href="blog-single.htm"><img src="@item.EvidencePic" alt="Post Thumb"></a>
+                                <a href="/Blog/Evidence/@item.EvidenceId"><img src="@item.EvidencePic" alt="Post Thumb"></a>
                                 <h3 class="title-bg">@Html.ActionLink(@item.Title, "Evidence", new { id = item.EvidenceId })</h3>
                                 <p>@item.Content</p>
                             </div>
@@ -87,6 +87,7 @@
             ================================================== -->
             <div class="span4 sidebar">
                 <!--Search-->
+                <h4 class="title-bg">Search</h4>
                 <section>
                     <div class="input-append">
                         <form method="post" action="/Blog/Index/">
@@ -98,13 +99,13 @@
                      </div>
                 </section>
                 <!--Categories-->
-                <h5 class="title-bg">Categories</h5>
+                @*<h5 class="title-bg">Categories</h5>
                 <ul class="post-category-list">
                     <li><a href="#"><i class="icon-plus-sign"></i>Design</a></li>
                     <li><a href="#"><i class="icon-plus-sign"></i>Illustration</a></li>
                     <li><a href="#"><i class="icon-plus-sign"></i>Tutorials</a></li>
                     <li><a href="#"><i class="icon-plus-sign"></i>News</a></li>
-                </ul>
+                </ul>*@
                 <!--Popular Posts-->
                 <h5 class="title-bg">Popular Posts</h5>
                 <ul class="popular-posts">

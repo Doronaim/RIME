@@ -36,6 +36,8 @@
         <!-- Page Content
         ================================================== -->
         <div class="row">
+            <!--Search-->
+
             <!-- Gallery Items
             ================================================== -->
             <div class="span12 gallery">
@@ -46,6 +48,18 @@
                     <li><a href="#" class="video">Video</a></li>
                     <li><a href="#" class="web">Web</a></li>
                 </ul>
+
+                <section>
+                    <div class="input-append">
+                        <form method="post" action="/Gallery/Index/">
+                            <input id="title" name="title" size="16" type="text" placeholder="Title"><!--<button class="btn" type="submit"><i class="icon-filter"></i></button>-->
+                            <input id="author" name="author" size="16" type="text" placeholder="Author">
+                            <input id="content" name="content" size="16" type="text" placeholder="Content">
+                            <input id="date" name="date" size="16" type="date" placeholder="Dates">
+                            <button id="submit" class="btn" type="submit"><i class="icon-search"></i></button>
+                        </form>
+                    </div>
+                </section>
                 <div class="row clearfix">
                     <ul class="gallery-post-grid holder">
                         @foreach(var video in Model)

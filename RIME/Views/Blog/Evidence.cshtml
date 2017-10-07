@@ -69,7 +69,8 @@
                                     <i class="icon-tags"></i>
                                     @foreach (var x in (Model.Tags))
                                     {
-                                        <a href="#">@x.TagName</a>
+                                        <a target="_blank" href="http://google.com/search?q=@x.TagName">@x.TagName</a>
+                                       
                                     }
                                 </li>
                             </ul>
@@ -77,13 +78,13 @@
                     </div>
                 </article>
                 <!-- About the Author -->
-                <section class="post-content">
+                @*<section class="post-content">
                     <div class="post-body about-author">
                         <img src="/img/author-avatar.jpg" alt="author">
                         <h4>About Nathan Brown</h4>
                         Proin tristique tellus in est vulputate luctus fermentum ipsum molestie. Vivamus tincidunt sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et urna. Nulla faucibus ligula eget ante varius ac euismod odio placerat. Nam sit amet felis non lorem faucibus rhoncus vitae id dui.
                     </div>
-                </section>
+                </section>*@
                 <!-- Post Comments
                 ================================================== -->
             <script type="text/javascript">
@@ -174,7 +175,7 @@
 
                                             <div class="row">
                                                 <div class="span2">
-                                                    <input type="submit" class="btn btn-inverse" value="Post My Comment" name="@Html.DisplayFor(model => model.EvidenceId)">
+                                                    <input type="submit" class="btn btn-inverse" value="Post My Comment" name="@Html.DisplayFor(model => com.EvidenceCommentId)">
                                                 </div>
                                             </div>
                                         </form>
@@ -193,6 +194,7 @@
             ================================================== -->
             <div class="span4 sidebar">
                 <!--Search-->
+                <h4 class="title-bg">Search</h4>
                 <section>
                     <div class="input-append">
                         <form method="post" action="/Blog/Index/">
@@ -204,13 +206,13 @@
                     </div>
                 </section>
                 <!--Categories-->
-                <h5 class="title-bg">Categories</h5>
+                @*<h5 class="title-bg">Categories</h5>
                 <ul class="post-category-list">
                     <li><a href="#"><i class="icon-plus-sign"></i>Design</a></li>
                     <li><a href="#"><i class="icon-plus-sign"></i>Illustration</a></li>
                     <li><a href="#"><i class="icon-plus-sign"></i>Tutorials</a></li>
                     <li><a href="#"><i class="icon-plus-sign"></i>News</a></li>
-                </ul>
+                </ul>*@
                 <!--Popular Posts-->
                 <h5 class="title-bg">Popular Posts</h5>
                 <ul class="popular-posts">
