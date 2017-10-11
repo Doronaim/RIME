@@ -24,8 +24,6 @@ namespace RIME.Models
         public string Quote { get; set; }
         public virtual ICollection<EvidenceComment> Comments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
-
-
-
+        public int RelatedEvidance { get; set; }
     }
 }

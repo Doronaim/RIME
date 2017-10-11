@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Accord.MachineLearning;
 using System.Web.Mvc;
 using RIME.Models;
 using System.Net;
 using LinqToTwitter;
+using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
+
 
 namespace RIME.Controllers
 {
@@ -112,6 +116,21 @@ namespace RIME.Controllers
             return View(evidence);
         }
 
+        [HttpGet]
+        public ActionResult GetRelatedEvidance(int? id) { 
+            
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Evidence evidence = db.Evidences.Find(id);
+            if (evidence == null)
+            {
+                return HttpNotFound();
+            }
+            return Json(evidence, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult PostComment()
         {
             EvidenceComment com = new EvidenceComment();
@@ -179,5 +198,70 @@ namespace RIME.Controllers
             .SingleOrDefaultAsync();
             return Json(srch.Statuses.ToList(), JsonRequestBehavior.AllowGet);
         }
+
+        public void RelatedBlogs()
+        {
+            var evidances = (from e in db.Evidences
+                         select e).ToList();
+
+            // Create Array of all posts content
+            string[] documents = (from p in db.Evidences
+                                  select p.Content).ToArray();
+
+            ///Apply TF*IDF to the documents and get the resulting vectors.
+            double[][] inputs = TFIDFEX.TFIDF.Transform(documents);
+            inputs = TFIDFEX.TFIDF.Normalize(inputs);
+
+            // Create a new K-Means algorithm with Posts/2 clusters (create couples) 
+            KMeans kmeans = new KMeans(Convert.ToInt32(evidances.Count() / 2));
+
+            // Compute the algorithm, retrieving an integer array
+            //  containing the labels for each of the observations
+            KMeansClusterCollection clusters = kmeans.Learn(inputs);
+            int[] labels = clusters.Decide(inputs);
+
+
+            // Create list with clusters couples
+            var clustersList = new List<List<int>>();
+            for (int j = 0; j < Convert.ToInt32(evidances.Count() / 2); j++)
+            {
+                clustersList.Add(labels.Select((s, i) => new { i, s })
+                                       .Where(t => t.s == j)
+                                       .Select(t => t.i)
+                                       .ToList());
+            }
+
+            // Adjust all posts and thier related by clustering results
+            var dict = new Dictionary<string, string>();
+            foreach (var cluster in clustersList)
+            {
+                // In case cluster contains 3 posts and not 2
+                if (cluster.Count() > 2)
+                {
+
+
+                    evidances[cluster[0]].RelatedEvidance = evidances[cluster[2]].EvidenceId;
+                    evidances[cluster[1]].RelatedEvidance = evidances[cluster[0]].EvidenceId;
+                    evidances[cluster[2]].RelatedEvidance = evidances[cluster[1]].EvidenceId;
+
+
+                }
+                else
+                {
+                  
+                    evidances[cluster.FirstOrDefault()].RelatedEvidance  = evidances[cluster.LastOrDefault()].EvidenceId;
+                    evidances[cluster.LastOrDefault()].RelatedEvidance = evidances[cluster.FirstOrDefault()].EvidenceId;
+
+                }
+
+            }
+            // Update Changes in DB
+            foreach (var p in evidances)
+            {
+                db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+            }
+            db.SaveChanges();
+        }
+
     }
 }

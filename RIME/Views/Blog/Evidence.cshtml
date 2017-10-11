@@ -216,23 +216,26 @@
                     <li><a href="#"><i class="icon-plus-sign"></i>News</a></li>
                 </ul>*@
                 <!--Popular Posts-->
-                <h5 class="title-bg">Popular Posts</h5>
-                <ul class="popular-posts">
-                    <li>
-                        <a href="#"><img src="/img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                        <h6><a href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a></h6>
-                        <em>Posted on 09/01/15</em>
-                    </li>
-                    <li>
-                        <a href="#"><img src="/img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                        <h6><a href="#">Nulla iaculis mattis lorem, quis gravida nunc iaculis</a></h6>
-                        <em>Posted on 09/01/15</em>
-                    <li>
-                        <a href="#"><img src="/img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
-                        <h6><a href="#">Vivamus tincidunt sem eu magna varius elementum maecenas felis</a></h6>
-                        <em>Posted on 09/01/15</em>
-                    </li>
+               
+                <h5 class="title-bg">Related Blogs</h5>
+                <ul id="related_post" class="popular-posts">
+                    
                 </ul>
+                <script type="text/javascript">
+                    $related_post = $("#related_post");
+                    $.getJSON("/Blog/GetRelatedEvidance/@Model.RelatedEvidance", function (result) {
+                        var img = result.EvidencePic;
+                        var title = result.Title;
+                        var date = new Date(parseInt(result.Date.replace("/Date(", "").replace(")/", ""), 10));
+                        date = date.toLocaleString();
+                        $related_post.append(
+                            "<li>" +
+                            '<a href="#"><img src="' + img + '" alt="Popular Post" height="100" width="100"></a>' +
+                            '<h6><a href="/Blog/Evidence/'+ @Model.RelatedEvidance +'">' + title + '</a></h6>' +
+                            '<em>Posted on ' + date + '</em>' +
+                            '</li>');
+                        });
+                </script>
                 <!--Tabbed Content-->
                 <h5 class="title-bg">More Info</h5>
                 <ul id="tweet_tab" class="nav nav-tabs">
