@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Accord.MachineLearning;
 using System.Web.Mvc;
 using RIME.Models;
 using System.Net;
 using LinqToTwitter;
 using System.Data;
-using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 
 
@@ -21,9 +19,16 @@ namespace RIME.Controllers
         {
             var evidences = new List<Evidence>
             {
-                new Evidence { EvidencePic="https://www.womensrefugeecommission.org/images/Legal-Protection_Header.jpg", EvidencePath="https://player.vimeo.com/video/236658328?title=0&amp;byline=0&amp;portrait=0", EvidenceLocation="United State", Date=DateTime.Now.Date, Title="Is israel a legitimate state?", UserName="Jack", Prolog="Alan Dershowitz professor of Law at Harvard law school trying to answer", Content="What is the difference between Anti-Semitism and Racism? Expelled jews were never defined as refugees, So what have changed? Alan Dershowitz will try to anwer these questions by explaining the importance of legal training.", Likes=23, Quote="Israel sought the way of the pen, rather than of the sword" },
-                new Evidence { EvidencePic="http://www.haaretz.com/polopoly_fs/1.632606!/image/1035438674.jpg_gen/derivatives/headline_609x343/1035438674.jpg", EvidencePath="https://player.vimeo.com/video/236657998?title=0&amp;byline=0&amp;portrait=0", EvidenceLocation="Egypt", Date=DateTime.Now.Date, Title="Ex. Extremist Islamist About Hamas", UserName="Mario", Prolog="Dr. Taufik Hamid, explains why people of Gaza is still suffering these days", Content="Hamas part in the current situation in Gaza strip. Is it has anything to do with Israel policy?", Likes=13, Quote="The suffer of the Palestinians is because of their leadership" },
-                new Evidence { EvidencePic="http://beapeacekeeper.com/unjobs/img/unitednationswall.jpg", EvidencePath="https://player.vimeo.com/video/236485822?title=0&amp;byline=0&amp;portrait=0", EvidenceLocation="New York", Date=DateTime.Now.Date, Title="Is UN Stegthening The Terrorism?", UserName="Eva", Prolog="Nikki Haley talkes after visiting the Middle East ", Content="USA Ambassador in UN congress is sharing her thoughts after visiting and talking to both sides.", Likes=22, Quote="Hamas has no cares for the Palestinians nor for Israelis" },
+                new Evidence { EvidencePic="https://goo.gl/9jWfp1", EvidencePath="https://goo.gl/VCTmmi", EvidenceLocation="United State", Date=DateTime.Now.Date, Title="Is israel a legitimate state?", UserName="Jack", Prolog="Alan Dershowitz professor of Law at Harvard law school is trying to answer", Content="What is the difference between Anti-Semitism and Racism? Expelled jews were never defined as refugees, So what have changed? Alan Dershowitz will try to anwer these questions by explaining the importance of legal training.", Likes=23, Quote="Israel sought the way of the pen, rather than of the sword" },
+                new Evidence { EvidencePic="https://goo.gl/CbLJsQ", EvidencePath="https://goo.gl/vzjKf6", EvidenceLocation="Egypt", Date=DateTime.Now.Date, Title="Ex. Extremist Islamist About Hamas", UserName="Mario", Prolog="Dr. Taufik Hamid, explains why people of Gaza are still suffering these days", Content="Hamas part in the current situation in Gaza strip. Is it has anything to do with Israel policy?", Likes=13, Quote="The suffer of the Palestinians is because of their leadership" },
+                new Evidence { EvidencePic="https://goo.gl/6NzJ7G", EvidencePath="https://goo.gl/m4Fzgr", EvidenceLocation="New York", Date=DateTime.Now.Date, Title="Is UN Stegthening The Terrorism?", UserName="Eva", Prolog="Nikki Haley talkes after visiting into the Middle East. What've changed? ", Content="USA Ambassador in UN congress is sharing her thoughts after visiting and talking to both sides.", Likes=22, Quote="Hamas has no cares for the Palestinians nor for Israelis" },
+
+                new Evidence { EvidencePic="https://goo.gl/xRCzxs", EvidencePath="https://goo.gl/7oRxjm", EvidenceLocation="Israel", Date=DateTime.Now.Date, Title="Is This Where History Begins?", UserName="Mario", Prolog="Israel's fourth elected Prime Minister Golda Meir interview", Content="Golda Meir shares her beliefs, explains what happened in the past and what she thinks will happen in the future. Was she right?", Likes=0, Quote="They just refuse to believe that we have the right to exist at all" },
+                new Evidence { EvidencePic="https://goo.gl/TSAnQN", EvidencePath="https://goo.gl/5yjQpM", EvidenceLocation="London", Date=DateTime.Now.Date, Title="Israel Loses Where Palastin Wins", UserName="Eva", Prolog="Melanie Phillips a British journalist critisize the west ideology", Content="Maybe Israel wins in battles on the field - but they absolutely loses in every other battle which involves Hasbara.", Likes=0, Quote="Israeli Hasbara is a Joke" },
+                new Evidence { EvidencePic="https://goo.gl/RTncTJ", EvidencePath="https://goo.gl/tpjDTE", EvidenceLocation="Jerusalem", Date=DateTime.Now.Date, Title="Palestinian Woman After Terror Attack", UserName="Eva", Prolog="Woman who hope for violence on friday outside the mosque", Content="An Interview with a woman who claims she lives inside the mosque, gave an interview to european media. Do her sentences sound rational?", Likes=0, Quote="Jews always lie" },
+
+                new Evidence { EvidencePic="https://goo.gl/KGqyYP", EvidencePath="https://goo.gl/fda1vK", EvidenceLocation="Boston", Date=DateTime.Now.Date, Title="History Lesson: Israel OR Syria-Palastina?", UserName="Jack", Prolog="What happened in the middle-east during the history?", Content="Romans, Greeks, Persians, Ottomans and basically almost everyone has putted their legs in this land. Who invented the Syria-Palastina name? all in here, in history pages.", Likes=0, Quote="Rename Judea to Syria-Palastina" },
+                new Evidence { EvidencePic="https://goo.gl/umo1Lp", EvidencePath="https://goo.gl/FQRGZH", EvidenceLocation="Sudan", Date=DateTime.Now.Date, Title="Sudanese Minister about the Palestinian Problem", UserName="Mario", Prolog="Minister that thinks differently and doesn't afraid to say it", Content="Mubarak al Fadil al Mahdi, a Minister of Investments in Sudan share his thoughts about the Palestinian problem. Mubarak talks about the mistakes the Palestinians did, and about the approach of all arab middle east countries.", Likes=0, Quote="The Arab countries peddled in the Palestinian cause" },
 
                 //new Evidence { EvidencePic="", EvidencePath="?title=0&amp;byline=0&amp;portrait=0", EvidenceLocation="", Date=DateTime.Now.Date, Title="", UserName="", Prolog="", Content="", Likes=0, Quote="" },
             };
@@ -45,15 +50,36 @@ namespace RIME.Controllers
             {
                 new Tag { EvidenceId=1, Categoty="Clip", TagName="Racism"},
                 new Tag { EvidenceId=1, Categoty="Clip", TagName="Legal"},
-                new Tag { EvidenceId=1, Categoty="People", TagName="Alan Dershowitz"},
+                new Tag { EvidenceId=1, Categoty="Figure", TagName="Alan Dershowitz"},
 
-                new Tag { EvidenceId=2, Categoty="Palestine", TagName="Gaza"},
+                new Tag { EvidenceId=2, Categoty="Media", TagName="Interview"},
                 new Tag { EvidenceId=2, Categoty="Palestine", TagName="Hamas"},
-                new Tag { EvidenceId=2, Categoty="People", TagName="Taufik Hamid"},
+                new Tag { EvidenceId=2, Categoty="Figure", TagName="Taufik Hamid"},
 
                 new Tag { EvidenceId=3, Categoty="World", TagName="UN"},
                 new Tag { EvidenceId=3, Categoty="Palestine", TagName="Hamas"},
-                new Tag { EvidenceId=3, Categoty="People", TagName="Nikki Haley"},
+                new Tag { EvidenceId=3, Categoty="Figure", TagName="Nikki Haley"},
+
+                new Tag { EvidenceId=4, Categoty="Media", TagName="Interview"},
+                new Tag { EvidenceId=4, Categoty="Palestine", TagName="Arabs"},
+                new Tag { EvidenceId=4, Categoty="Figure", TagName="Golda Meir"},
+
+                new Tag { EvidenceId=5, Categoty="Figure", TagName="Melanie Phillips"},
+                new Tag { EvidenceId=5, Categoty="Media", TagName="Interview"},
+                new Tag { EvidenceId=5, Categoty="Solution", TagName="two states"},
+                
+                new Tag { EvidenceId=6, Categoty="World", TagName="Terror"},
+                new Tag { EvidenceId=6, Categoty="Solution", TagName="Mosque"},
+                new Tag { EvidenceId=6, Categoty="Media", TagName="Interview"},
+
+                new Tag { EvidenceId=7, Categoty="History", TagName="History"},
+                new Tag { EvidenceId=7, Categoty="Clip", TagName="Interview"},
+         
+                new Tag { EvidenceId=8, Categoty="World", TagName="Sudan"},
+                new Tag { EvidenceId=8, Categoty="Media", TagName="Interview"},
+
+
+
 
 
             };
@@ -112,7 +138,7 @@ namespace RIME.Controllers
             {
                 return HttpNotFound();
             }
-  
+            RelatedBlogs();
             return View(evidence);
         }
 
@@ -261,6 +287,7 @@ namespace RIME.Controllers
                 db.Entry(p).State = System.Data.Entity.EntityState.Modified;
             }
             db.SaveChanges();
+
         }
 
     }

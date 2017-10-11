@@ -3,7 +3,7 @@ namespace RIME.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AfterStaging : DbMigration
+    public partial class Relevant1 : DbMigration
     {
         public override void Up()
         {
@@ -52,6 +52,7 @@ namespace RIME.Migrations
                         Date = c.DateTime(nullable: false),
                         Likes = c.Int(nullable: false),
                         Quote = c.String(),
+                        RelatedEvidance = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.EvidenceId);
             

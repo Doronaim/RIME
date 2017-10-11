@@ -107,9 +107,17 @@
                     <li><a href="#"><i class="icon-plus-sign"></i>News</a></li>
                 </ul>*@
                 <!--Popular Posts-->
-                <h5 class="title-bg">Popular Posts</h5>
+                <h5 class="title-bg">More Posts</h5>
                 <ul class="popular-posts">
-                    <li>
+                    @foreach (var post in Model.Take(3))
+                    {
+                        <li>
+                            <a href="/Blog/Evidence/@post.EvidenceId"><img src="@post.EvidencePic" alt="Popular Post height="100" width="100"></a>
+                            <h6><a href="/Blog/Evidence/@post.EvidenceId">@post.Title</a></h6>
+                            <em>Posted on @post.Date.ToShortDateString()</em>
+                        </li>
+                    }
+                    @*<li>
                         <a href="#"><img src="/img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
                         <h6><a href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a></h6>
                         <em>Posted on 09/01/15</em>
@@ -122,7 +130,7 @@
                         <a href="#"><img src="/img/gallery/gallery-img-2-thumb.jpg" alt="Popular Post"></a>
                         <h6><a href="#">Vivamus tincidunt sem eu magna varius elementum maecenas felis</a></h6>
                         <em>Posted on 09/01/15</em>
-                    </li>
+                    </li>*@
                 </ul>
                 <!--Tabbed Content-->
                 <h5 class="title-bg">More Info</h5>
