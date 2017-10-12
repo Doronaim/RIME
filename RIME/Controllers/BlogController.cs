@@ -231,11 +231,11 @@ namespace RIME.Controllers
                          select e).ToList();
 
             // Create Array of all posts content
-            string[] documents = (from p in db.Evidences
-                                  select p.Content).ToArray();
+            string[] documents = (from p in db.Evidences.Include("Tags")
+                                  select p.Content + " " + p.Title).ToArray(); //  + String.Join(",", p.Tags.Select(x => x.TagName))
 
             ///Apply TF*IDF to the documents and get the resulting vectors.
-            double[][] inputs = TFIDFEX.TFIDF.Transform(documents);
+            double[][] inputs = TFIDFEX.TFIDF.Transform(documents, 2);
             inputs = TFIDFEX.TFIDF.Normalize(inputs);
 
             // Create a new K-Means algorithm with Posts/2 clusters (create couples) 
