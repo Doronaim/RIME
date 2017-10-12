@@ -202,6 +202,7 @@ namespace TFIDFEX
             "lest",
             "let's",
             "like",
+            "location",
             "likewise",
             "little",
             "living",

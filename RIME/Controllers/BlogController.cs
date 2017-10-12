@@ -8,7 +8,7 @@ using System.Net;
 using LinqToTwitter;
 using System.Data;
 using System.Threading.Tasks;
-
+using System.Text;
 
 namespace RIME.Controllers
 {
@@ -231,11 +231,16 @@ namespace RIME.Controllers
                          select e).ToList();
 
             // Create Array of all posts content
-            string[] documents = (from p in db.Evidences.Include("Tags")
-                                  select p.Content + " " + p.Title).ToArray(); //  + String.Join(",", p.Tags.Select(x => x.TagName))
+            var docs = new List<string>();
+            foreach (Evidence e in db.Evidences)
+            {
+                docs.Add(e.ToString());
+            }
+            string[] documents = docs.ToArray(); //(from p in db.Evidences.Include("Tags")
+                                  //select p.Content + " " + p.Title).ToArray(); //  + String.Join(",", p.Tags.Select(x => x.TagName))
 
             ///Apply TF*IDF to the documents and get the resulting vectors.
-            double[][] inputs = TFIDFEX.TFIDF.Transform(documents, 2);
+            double[][] inputs = TFIDFEX.TFIDF.Transform(documents);
             inputs = TFIDFEX.TFIDF.Normalize(inputs);
 
             // Create a new K-Means algorithm with Posts/2 clusters (create couples) 

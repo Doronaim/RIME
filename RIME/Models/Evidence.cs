@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace RIME.Models
@@ -25,5 +26,18 @@ namespace RIME.Models
         public virtual ICollection<EvidenceComment> Comments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
         public int RelatedEvidance { get; set; }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append(Title).Append(" ").Append(Content);
+            foreach (Tag t in Tags)
+            {
+                sb.Append(t.TagName).Append(",");
+            }
+            sb.Append(" ").Append(Quote)
+                .Append(" ").Append(Prolog).Append(" By ").Append(UserName).Append(" Location ").Append(EvidenceLocation);
+            return sb.ToString();
+        }
     }
 }
