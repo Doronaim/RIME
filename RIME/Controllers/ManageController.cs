@@ -694,36 +694,43 @@ namespace RIME.Controllers
         // GET: Evidences
         public ActionResult EvidenceStatistics(bool? publisher, bool? dates)
         {
-            /*Get post per user count */
-            var postsPerUser = from e in db.Evidences
+            // Count the evidences by Author name
+            var evidencesByName = from e in db.Evidences
                                group e by e.UserName into author
                                select new { Name = author.Key, Evidences = author.Count() };
 
-            /* Get post per month count */
-            var postsPerDates = (from e in db.Evidences
+            
+            // Count all the evideces by month
+            var evidenceByMonth = (from e in db.Evidences
                                  group e by new { month = e.Date.Month, year = e.Date.Year } into d
                                  select new { dt = d.Key.month.ToString() + "/" + d.Key.year.ToString(), count = d.Count() }).OrderByDescending(g => g.dt);
 
-            /* Create list of selected dates, 12 month back */
+            
             var selectedDates = new List<String>();
+
             for (var date = DateTime.Now.AddYears(-1); date <= DateTime.Now; date = date.AddMonths(1))
             {
                 selectedDates.Add(date.Month.ToString() + "/" + date.Year.ToString());
             }
-            /* Create final json for post per month graph including months with zero posts */
-            var DatesCount = from d in selectedDates
-                             join p in postsPerDates on d equals p.dt into dd
+
+            // Quary for all the evidences per month include month with zero
+            var monthCount = from d in selectedDates
+                             join e in evidenceByMonth on d equals e.dt into dd
                              from count in dd.DefaultIfEmpty()
                              select new { Date = d, Count = count == null ? 0 : count.count };
 
-            /* For ajax requests */
+            // Get request requests hnadle
             if (Request.AcceptTypes.Contains("application/json"))
             {
                 if (publisher.GetValueOrDefault())
-                    return Json(postsPerUser, JsonRequestBehavior.AllowGet);
+                {
+                    return Json(evidencesByName, JsonRequestBehavior.AllowGet);
+                }
 
                 if (dates.GetValueOrDefault())
-                    return Json(DatesCount, JsonRequestBehavior.AllowGet);
+                {
+                    return Json(monthCount, JsonRequestBehavior.AllowGet);
+                }
             }
 
             return View("Evidence/Statistics", db.Evidences.ToList());
