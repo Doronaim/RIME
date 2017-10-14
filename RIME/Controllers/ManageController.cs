@@ -404,7 +404,14 @@ namespace RIME.Controllers
             if (ModelState.IsValid)
             {
                 db.Tags.Add(tag);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return View("400");
+                }
                 return RedirectToAction("TagIndex");
             }
 
@@ -440,7 +447,14 @@ namespace RIME.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(tag).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return View("400");
+                }
                 return RedirectToAction("TagIndex");
             }
             return View("Tag/Edit",tag);
@@ -472,7 +486,15 @@ namespace RIME.Controllers
                 return RedirectToAction("Index", "User");
             Tag tag = db.Tags.Find(id);
             db.Tags.Remove(tag);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return View(
+                    );
+            }
             return RedirectToAction("TagIndex");
         }
 
@@ -568,10 +590,16 @@ namespace RIME.Controllers
                         db.Tags.Add(tg);
                     }
                 }
-      
-                db.SaveChanges();
 
-                
+                try {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return View("400");
+                }
+
+
                 return RedirectToAction("EvidenceIndex");
             }
 
@@ -607,7 +635,14 @@ namespace RIME.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(evidence).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return View("400");
+                }
                 return RedirectToAction("EvidenceIndex");
             }
             return View("Evidence/Edit",evidence);
@@ -639,7 +674,14 @@ namespace RIME.Controllers
                 return RedirectToAction("Index", "User");
             Evidence evidence = db.Evidences.Find(id);
             db.Evidences.Remove(evidence);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return View("400");
+            }
             return RedirectToAction("EvidenceIndex");
         }
 
@@ -694,6 +736,8 @@ namespace RIME.Controllers
         // GET: Evidences
         public ActionResult EvidenceStatistics(bool? publisher, bool? dates)
         {
+            if (!isAdminUser())
+                return RedirectToAction("Index", "User");
             // Count the evidences by Author name
             var evidencesByName = from e in db.Evidences
                                group e by e.UserName into author
@@ -755,7 +799,14 @@ namespace RIME.Controllers
             if (ModelState.IsValid)
             {
                 db.EvidenceComments.Add(evidenceComment);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return View("400");
+                }
                 return RedirectToAction("EvidenceCommentIndex");
             }
 
@@ -791,7 +842,13 @@ namespace RIME.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(evidenceComment).State = EntityState.Modified;
+                try { 
                 db.SaveChanges();
+                }
+                catch
+                {
+                    return View("400");
+                }
                 return RedirectToAction("EvidenceCommentsIndex");
             }
             return View("EvidenceComments/Edit", evidenceComment);
@@ -823,7 +880,14 @@ namespace RIME.Controllers
                 return RedirectToAction("Index", "User");
             EvidenceComment evidenceComment = db.EvidenceComments.Find(id);
             db.EvidenceComments.Remove(evidenceComment);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return View("400");
+            }
             return RedirectToAction("EvidenceCommentsIndex");
         }
 
@@ -896,7 +960,14 @@ namespace RIME.Controllers
             if (ModelState.IsValid)
             {
                 db.SubComments.Add(subComment);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return View("400");
+                }
                 return RedirectToAction("SubCommentsIndex");
             }
 
@@ -932,7 +1003,14 @@ namespace RIME.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(subComment).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return View("400");
+                }
                 return RedirectToAction("SubCommentsIndex");
             }
             return View("SubComments/Edit", subComment);
@@ -964,7 +1042,14 @@ namespace RIME.Controllers
                 return RedirectToAction("Index", "User");
             SubComment subComment = db.SubComments.Find(id);
             db.SubComments.Remove(subComment);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return View("400");
+            }
             return RedirectToAction("SubCommentsIndex");
         }
 

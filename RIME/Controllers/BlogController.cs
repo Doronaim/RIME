@@ -30,7 +30,7 @@ namespace RIME.Controllers
                 new Evidence { EvidencePic="https://goo.gl/CbLJsQ", EvidencePath="https://goo.gl/vzjKf6", EvidenceLocation="Egypt", Date=dates[0], Title="Ex. Extremist Islamist About Hamas", UserName="Mario", Prolog="Dr. Taufik Hamid, explains why people of Gaza are still suffering these days", Content="Hamas part in the current situation in Gaza strip. Is it has anything to do with Israel policy?", Likes=13, Quote="The suffer of the Palestinians is because of their leadership" },
                 new Evidence { EvidencePic="https://goo.gl/6NzJ7G", EvidencePath="https://goo.gl/m4Fzgr", EvidenceLocation="New York", Date=dates[2], Title="Is UN Stegthening The Terrorism?", UserName="Eva", Prolog="Nikki Haley talkes after visiting into the Middle East. What've changed? ", Content="USA Ambassador in UN congress is sharing her thoughts after visiting and talking to both sides.", Likes=22, Quote="Hamas has no cares for the Palestinians nor for Israelis" },
 
-                new Evidence { EvidencePic="https://goo.gl/xRCzxs", EvidencePath="https://goo.gl/7oRxjm", EvidenceLocation="Israel", Date=dates[0], Title="Is This Where History Begins?", UserName="Mario", Prolog="Israel's fourth elected Prime Minister Golda Meir interview", Content="Golda Meir shares her beliefs, explains what happened in the past and what she thinks will happen in the future. Was she right?", Likes=4, Quote="They just refuse to believe that we have the right to exist at all" },
+                new Evidence { EvidencePic="https://goo.gl/xRCzxs", EvidencePath="https://goo.gl/7oRxjm", EvidenceLocation="Israel", Date=dates[0], Title="Is This Where History Begins?", UserName="Mario", Prolog="Israel's fourth elected Prime Minister Golda Meir interview in the 70's", Content="Golda Meir shares her beliefs, explains what happened in the past and what she thinks will happen in the future. Was she right?", Likes=4, Quote="They just refuse to believe that we have the right to exist at all" },
                 new Evidence { EvidencePic="https://goo.gl/TSAnQN", EvidencePath="https://goo.gl/5yjQpM", EvidenceLocation="London", Date=dates[2], Title="Israel Loses Where Palastin Wins", UserName="Eva", Prolog="Melanie Phillips a British journalist critisize the west ideology", Content="Maybe Israel wins in battles on the field - but they absolutely loses in every other battle which involves Hasbara.", Likes=8, Quote="Israeli Hasbara is a Joke" },
                 new Evidence { EvidencePic="https://goo.gl/RTncTJ", EvidencePath="https://goo.gl/tpjDTE", EvidenceLocation="Jerusalem", Date=dates[1], Title="Palestinian Woman After Terror Attack", UserName="Eva", Prolog="Woman who hope for violence on friday outside the mosque", Content="An Interview with a woman who claims she lives inside the mosque, gave an interview to european media. Do her sentences sound rational?", Likes=19, Quote="Jews always lie" },
 
@@ -176,7 +176,14 @@ namespace RIME.Controllers
 
             com.Content = Request.Form[keys[2]];
             db.EvidenceComments.Add(com);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return View("400");
+            }
             return RedirectToAction("Evidence/" + com.EvidenceId);
         }
         public ActionResult PostSubComment()
@@ -201,7 +208,14 @@ namespace RIME.Controllers
                 return HttpNotFound();
             }
             db.SubComments.Add(com);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return View("400");
+            }
             return RedirectToAction("Evidence/" + evcom.EvidenceId);
         }
 

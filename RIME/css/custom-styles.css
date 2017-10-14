@@ -125,9 +125,9 @@ ul.nav li.dropdown:hover ul.dropdown-menu{ display: block; }
 	border: none;
 	*border-right-width: none;
 	*border-bottom-width: none;
-	-webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-          border-radius: 0px;
+	-webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+          border-radius: 10px;
 	-webkit-box-shadow: none;
      -moz-box-shadow: none;
           box-shadow: none;
