@@ -9,26 +9,177 @@
 <meta charset="utf-8">
 
 <head>
+   
     <style>
-        .axis {
+
+        /*        .arc text {
             font: 10px sans-serif;
+            text-anchor: middle;
         }
 
-            .axis path,
-            .axis line {
-                fill: none;
-                stroke: #000;
-                shape-rendering: crispEdges;
-            }
+        .arc path {
+            stroke: #fff;
+        }*/
     </style>
 </head>
 
 <body>
+    <div id="piecontainer" style="display: -webkit-inline-box;">
+        <h1>Publishers Statistics</h1>
+        <!--<svg id="pie-chart" width="960" height="500"></svg>-->
+        <canvas id="pie" width="500" height="260"></canvas>
+    </div>
 
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <div id="chartcontainer">
+        <h1>Last Year Posts Statistics</h1>
+        <svg id="bar-chart" width="600" height="260"></svg>
+    </div>
+
+    <script src="https://d3js.org/d3.v4.js"></script>
 
     <script>
+        /* Statistics page functionallity */
+        $(document).ready(function () {
+            /* Posts per user pie initialization */
+            
+            /*var svg = d3.select("svg"),
+                width = +svg.attr("width"),
+                height = +svg.attr("height"),
+                radius = Math.min(width, height) / 2,
+                g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+            var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+            var pie = d3.pie()
+                .sort(null)
+                .value(function (d) { return d.population; });
+
+            var path = d3.arc()
+                .outerRadius(radius - 10)
+                .innerRadius(0);
+
+            var label = d3.arc()
+                .outerRadius(radius - 40)
+                .innerRadius(radius - 40);
+
+            //var colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"];
+            */
+
+            var canvas = document.querySelector("canvas"),
+                 context = canvas.getContext("2d");
+
+            var width = canvas.width,
+                height = canvas.height,
+                radius = Math.min(width, height) / 2;
+
+            var colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"];
+
+            var arc = d3.arc()
+                .outerRadius(radius - 10)
+                .innerRadius(0)
+                .context(context);
+
+            var labelArc = d3.arc()
+                .outerRadius(radius - 40)
+                .innerRadius(radius - 40)
+                .context(context);
+
+            var pie = d3.pie()
+                .sort(null)
+                .value(function (d) { return d.Evidences; });
+
+            context.translate(width / 2, height / 2);
+            
+
+            d3.json("http://localhost:38006/Manage/EvidenceStatistics?publisher=True", function (error, data) {
+                if (error) throw error;
+
+                var arcs = pie(data);
+
+                arcs.forEach(function (d, i) {
+                    context.beginPath();
+                    arc(d);
+                    context.fillStyle = colors[i];
+                    context.fill();
+                });
+
+                context.beginPath();
+                arcs.forEach(arc);
+                context.strokeStyle = "#fff";
+                context.stroke();
+
+                context.textAlign = "center";
+                context.textBaseline = "middle";
+                context.fillStyle = "#000";
+                arcs.forEach(function (d) {
+                    var c = labelArc.centroid(d);
+                    context.fillText(d.data.Name + " - " + d.data.Evidences, c[0], c[1]);
+                });
+                /*
+                var arc = g.selectAll(".arc")
+                    .data(pie(data))
+                    .enter().append("g")
+                    .attr("class", "arc");
+
+                arc.append("path")
+                    .attr("d", path)
+                    .attr("fill", function (d) { return color(d.data.age); });
+
+                arc.append("text")
+                    .attr("transform", function (d) { return "translate(" + label.centroid(d) + ")"; })
+                    .attr("dy", "0.35em")
+                    .text(function (d) { return d.data.age; });
+                    */
+            });
+
+           
+            /* Posts per data bar-chart initialization */
+            
+            var svg = d3.select("svg"),
+                margin = { top: 20, right: 20, bottom: 30, left: 40 },
+                width = +svg.attr("width") - margin.left - margin.right,
+                height = +svg.attr("height") - margin.top - margin.bottom;
+
+            var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+                y = d3.scaleLinear().rangeRound([height, 0]);
+
+            var g = svg.append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            d3.json("http://localhost:38006/Manage/EvidenceStatistics?dates=True", function (error, data) {
+                if (error) throw error;
+
+                x.domain(data.map(function (d) { return d.Date; }));
+                y.domain([0, d3.max(data, function (d) { return d.Count; })]);
+
+                g.append("g")
+                    .attr("class", "axis axis--x")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x));
+
+                g.append("g")
+                    .attr("class", "axis axis--y")
+                    .call(d3.axisLeft(y).ticks(10))
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", "0.71em")
+                    .attr("text-anchor", "end")
+
+                g.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function (d) { return x(d.Date); })
+                    .attr("y", function (d) { return y(d.Count); })
+                    .attr("width", x.bandwidth())
+                    .attr("height", function (d) { return height - y(d.Count); });
+            });
+            
+        });
+
+
+        /*
 var margin = {top: 20, right: 20, bottom: 70, left: 40},
     width = 600 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
@@ -97,7 +248,7 @@ d3.csv("bar-data.csv", function(error, data) {
       .attr("height", function(d) { return height - y(d.value); });
 
 });
-
+        */
     </script>
 
 </body>
