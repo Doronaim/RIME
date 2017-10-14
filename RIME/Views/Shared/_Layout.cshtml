@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Piccolo Theme</title>
+    <title>Rime</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
     <!-- JS
     ================================================== -->
-    
+
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
     <script src="/js/bootstrap.js"></script>
@@ -36,41 +36,41 @@
     <script src="/js/jquery.flexslider.js"></script>
     <script src="/js/jquery.custom.js"></script>
     <script type="text/javascript">
-$(document).ready(function () {
+        $(document).ready(function () {
 
-    $("#btn-blog-next").click(function () {
-      $('#blogCarousel').carousel('next')
-    });
-     $("#btn-blog-prev").click(function () {
-      $('#blogCarousel').carousel('prev')
-    });
+            $("#btn-blog-next").click(function () {
+                $('#blogCarousel').carousel('next')
+            });
+            $("#btn-blog-prev").click(function () {
+                $('#blogCarousel').carousel('prev')
+            });
 
-     $("#btn-client-next").click(function () {
-      $('#clientCarousel').carousel('next')
-    });
-     $("#btn-client-prev").click(function () {
-      $('#clientCarousel').carousel('prev')
-    });
+            $("#btn-client-next").click(function () {
+                $('#clientCarousel').carousel('next')
+            });
+            $("#btn-client-prev").click(function () {
+                $('#clientCarousel').carousel('prev')
+            });
 
-});
+        });
 
- $(window).load(function(){
+        $(window).load(function () {
 
-    $('.flexslider').flexslider({
-        animation: "slide",
-        slideshow: true,
-        start: function(slider){
-          $('body').removeClass('loading');
-        }
-    });
+            $('.flexslider').flexslider({
+                animation: "slide",
+                slideshow: true,
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
 
-    $(document).ready(function () {
-        $(".dropdown-toggle").dropdown();
-    });
+            $(document).ready(function () {
+                $(".dropdown-toggle").dropdown();
+            });
 
-});
+        });
 
-</script>
+    </script>
 </head>
 <body class="home">
     <!-- Color Bars (above header)-->
@@ -95,17 +95,12 @@ $(document).ready(function () {
 
                     <ul class="nav">
                         <li class="dropdown active"><a href="/">Home</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="/Gallery">Gallery <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/Gallery">Video Gallery</a></li>
-                                <li><a href="#">Favorite Gallery</a></li>
-                            </ul>
-
-                        </li>
+                        <li><a href="/Gallery">Video Gallery</a></li>
                         <li><a href="/Blog">Blog</a></li>
-                        @if (User.Identity.IsAuthenticated) {
-                                        if (User.IsInRole("Admin")){
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
 
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="/Manage">Manage <b class="caret"></b></a>
@@ -114,13 +109,12 @@ $(document).ready(function () {
                                 <li><a href="/Manage/EvidenceCommentsIndex">Comments</a></li>
                                 <li><a href="/Manage/SubCommentsIndex">SubComments</a></li>
                                 <li><a href="/Manage/TagIndex">Tags</a></li>
-                                <li><a href="/Manage/Index">Users</a></li>
                                 <li><a href="/Manage/EvidenceStatistics">Statistics</a></li>
                             </ul>
                         </li>
+                            }
                         }
-                        }
-                        <li><a href="#">Contact</a></li>
+                       
                         @Html.Partial("_LoginPartial")
                     </ul>
 
@@ -153,76 +147,26 @@ $(document).ready(function () {
                             <option value="blog-style3.htm">- Blog Style 3</option>
                             <option value="blog-style4.htm">- Blog Style 4</option>
                             <option value="blog-single.htm">- Blog Single</option>
-                            <option value="page-contact.htm">Contact</option>
+                            
                         </select>
                     </div>
                 </form>
             </div>
-        @RenderBody()
+            @RenderBody()
         </div><!-- End Header -->
-        <div class="footer-container">
-            <ul class="social-icons">
-                <li><a href="#" class="social-icon facebook"></a></li>
-                <li><a href="#" class="social-icon twitter"></a></li>
-                <li><a href="#" class="social-icon dribble"></a></li>
-                <li><a href="#" class="social-icon rss"></a></li>
-                <li><a href="#" class="social-icon forrst"></a></li>
-                <br />
-            </ul>
-            <!-- Begin Footer -->
-                @*<div class="row footer-row">
-                    <div class="span3 footer-col">
-                        <h5>About Us</h5>
-                        <img src="/img/piccolo-logo.png" alt="RIME" width="100" height="100" /><br /><br />
-                        <address>
-                            <strong>Design Team</strong><br />
-                            123 Main St, Suite 500<br />
-                            New York, NY 12345<br />
-                        </address>
-                        <ul class="social-icons">
-                            <li><a href="#" class="social-icon facebook"></a></li>
-                            <li><a href="#" class="social-icon twitter"></a></li>
-                            <li><a href="#" class="social-icon dribble"></a></li>
-                            <li><a href="#" class="social-icon rss"></a></li>
-                            <li><a href="#" class="social-icon forrst"></a></li>
-                        </ul>
-                    </div>
-                    <div class="span3 footer-col">
-                        <h5>Latest Tweets</h5>
-                        <ul>
-                            <li><a href="#">#room122</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                            <li><a href="#">#room122</a> In interdum felis fermentum ipsum molestie sed porttitor ligula rutrum. Morbi blandit ultricies ultrices.</li>
-                            <li><a href="#">#room122</a> Vivamus nec lectus sed orci molestie molestie. Etiam mattis neque eu orci rutrum aliquam.</li>
-                        </ul>
-                    </div>
-                    <div class="span3 footer-col">
-                        <h5>Latest Posts</h5>
-                        <ul class="post-list">
-                            <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-                            <li><a href="#">Consectetur adipiscing elit est lacus gravida</a></li>
-                            <li><a href="#">Lectus sed orci molestie molestie etiam</a></li>
-                            <li><a href="#">Mattis consectetur adipiscing elit est lacus</a></li>
-                            <li><a href="#">Cras rutrum, massa non blandit convallis est</a></li>
-                        </ul>
-                    </div>
-                    <div class="span3 footer-col">
-                        <h5>Flickr Photos</h5>
-                        <ul class="img-feed">
-                            <li><a href="#"><img src="/img/piccolo-logo.png" alt="Image Feed" width="60" height="60"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                            <li><a href="#"><img src="/img/gallery/flickr-img-1.jpg" alt="Image Feed"></a></li>
-                        </ul>
-                    </div>
-                </div>*@
+    </div>
+    <div class="footer-container">
+        <div class="container">
+            <div class="row footer-row">
+                <ul class="social-icons">
+                    <li><a href="#" class="social-icon facebook"></a></li>
+                    <li><a href="#" class="social-icon twitter"></a></li>
+                    <li><a href="#" class="social-icon dribble"></a></li>
+                    <li><a href="#" class="social-icon rss"></a></li>
+                    <li><a href="#" class="social-icon forrst"></a></li>
+                    <br />
+                </ul>
+                </div>
                 <div class="row">
                     <!-- Begin Sub Footer -->
                     <div class="span12 footer-col footer-sub">
@@ -230,17 +174,15 @@ $(document).ready(function () {
                             <div class="span6"><span class="left">Copyright 2017 RIME Theme. All rights reserved: Doron, Eran and Tal</span></div>
                             <div class="span6">
                                 <span class="right">
-                                    <a href="/Home">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/Gallery">Gallery</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/Blog">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/Manage">Login</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact</a>
-                                </span>
+                                    <a href="/Home">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/Gallery">Gallery</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/Blog">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/Manage">Login</a>
                             </div>
                         </div>
                     </div>
                 </div><!-- End Sub Footer -->
             </div>
-        </div><!-- End Footer -->
-        <!-- Scroll to Top -->
-        <div id="toTop" class="hidden-phone hidden-tablet">Back to Top</div>
-       </div>
+    </div><!-- End Footer -->
+    <!-- Scroll to Top -->
+    <div id="toTop" class="hidden-phone hidden-tablet">Back to Top</div>
     @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

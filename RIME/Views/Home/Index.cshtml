@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<RIME.Models.Evidence>
 <!DOCTYPE html>
-<html >
-<head>`
+<html>
+<head>
+    `
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Piccolo Theme</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="/css/prettyPhoto.css" />
     <link rel="stylesheet" href="/css/flexslider.css" />
     <link rel="stylesheet" href="/css/custom-styles.css">
-    <link rel="stylesheet" href="/css/marquee.css" >
+    <link rel="stylesheet" href="/css/marquee.css">
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <link rel="stylesheet" href="css/style-ie.css"/>
@@ -24,7 +25,6 @@
     <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
-
     <!-- JS
                     ================================================== -->
     @*<script src="/js/jquery-1.11.2.min.js"></script>*@
@@ -37,16 +37,10 @@
     <script src="/js/jquery.custom.js"></script>
     <script src="/js/jquery.marquee.js"></script>
 
-    
-
 </head>
-
 
 <body class="home">
     <!-- Color Bars (above header)-->
-
-
-
 
     <div class="row headline">
         <!-- Begin Headline -->
@@ -70,8 +64,6 @@
             </div>
         </div>
 
-
-
         <!-- Headline Text
         ================================================== -->
         <div class="span4">
@@ -84,29 +76,28 @@
             <a href="/Blog"><i class="icon-plus-sign"></i>Read More</a>
         </div>
     </div><!-- End Headline -->
-
-        <div class="row">
-            <!-- Gallery Items
-            ================================================== -->
-            <div class="span12 gallery">
-                <h5 class="title-bg">
-                    Recent Stories
-                    <small>This Really Happened</small>
-                    @*<button class="btn btn-mini btn-inverse hidden-phone" type="button">View Gallery</button>*@
-                </h5>
-                <ul id="filterOptions" class="gallery-cats clearfix">
-                    <li class="active"><a href="#" class="all">All</a></li>
-                    <li><a href="#" class="Media">Media</a></li>
-                    <li><a href="#" class="World">World</a></li>
-                    <li><a href="#" class="Clip">Clip</a></li>
-                    <li><a href="#" class="Figure">Figure</a></li>
-                </ul>
-                <div class="row clearfix">
-                    <ul class="gallery-post-grid holder">
-                        @foreach (var evidence in Model.Reverse().Take(6))
+    <div class="row">
+        <!-- Gallery Items
+        ================================================== -->
+        <div class="span12 gallery">
+            <h5 class="title-bg">
+                Recent Stories
+                <small>This Really Happened</small>
+                @*<button class="btn btn-mini btn-inverse hidden-phone" type="button">View Gallery</button>*@
+            </h5>
+            <ul id="filterOptions" class="gallery-cats clearfix">
+                <li class="active"><a href="#" class="all">All</a></li>
+                <li><a href="#" class="Media">Media</a></li>
+                <li><a href="#" class="World">World</a></li>
+                <li><a href="#" class="Clip">Clip</a></li>
+                <li><a href="#" class="Figure">Figure</a></li>
+            </ul>
+            <div class="row clearfix">
+                <ul class="gallery-post-grid holder">
+                    @foreach (var evidence in Model.Reverse().Take(6))
                         {
-                            <li class="span4 gallery-item" data-id="id-@evidence.EvidenceId" data-type="@evidence.Tags.FirstOrDefault().Categoty">
-                                @*<span class="gallery-hover-3col hidden-phone hidden-tablet">
+                        <li class="span4 gallery-item" data-id="id-@evidence.EvidenceId" data-type="@evidence.Tags.FirstOrDefault().Categoty">
+                            @*<span class="gallery-hover-3col hidden-phone hidden-tablet">
                                     <iframe src="@evidence.EvidencePath" width="368" height="350" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                                 </span>*@
                             <iframe src="@evidence.EvidencePath" width="368" height="350"></iframe>
@@ -114,78 +105,72 @@
                             <span class="project-details">@Html.ActionLink(evidence.Title, "Evidence", "Blog", new { id = evidence.EvidenceId }, "")@evidence.Prolog</span>
                         </li>
                     }
-
                 </ul>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <!-- Begin Bottom Section -->
+        <!-- Blog Preview
+        ================================================== -->
+        <div class="span6">
+            <h5 class="title-bg">
+                Evidences
+                <small>All around the world</small>
+            </h5>
+            <div id="blogCarousel" class="carousel slide ">
+                <div id="googleMap" style="width:100%;height:250px;"></div>
+            </div>
+        </div>
+        <!-- Client Area
+        ================================================== -->
+        <div class="span6">
+            <h5 class="title-bg">
+                Leading Quotes
+                <small>From The Field</small>
+                <button id="btn-client-next" class="btn btn-inverse btn-mini" type="button">&raquo;</button>
+                <button id="btn-client-prev" class="btn btn-inverse btn-mini" type="button">&laquo;</button>
+            </h5>
+            <!-- Client Testimonial Slider-->
+            <div id="clientCarousel" class="carousel slide no-margin">
+                <!-- Carousel items -->
+                <div class="carousel-inner">
 
-                <div class="row">
-                    <!-- Begin Bottom Section -->
-                    <!-- Blog Preview
-                    ================================================== -->
-                    <div class="span6">
-                        <h5 class="title-bg">
-                            Evidences 
-                            <small>All around the world</small>
-                        </h5>
-                        <div id="blogCarousel" class="carousel slide ">
-                            <div id="googleMap" style="width:100%;height:250px;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Client Area
-                    ================================================== -->
-                    <div class="span6">
-                        <h5 class="title-bg">
-                            Leading Quotes
-                            <small>From The Field</small>
-                            <button id="btn-client-next" class="btn btn-inverse btn-mini" type="button">&raquo;</button>
-                            <button id="btn-client-prev" class="btn btn-inverse btn-mini" type="button">&laquo;</button>
-                        </h5>
-                        <!-- Client Testimonial Slider-->
-                        <div id="clientCarousel" class="carousel slide no-margin">
-                            <!-- Carousel items -->
-                            <div class="carousel-inner">
-                                
-                                @foreach (var evidence in Model.Reverse().Take(6)) {
-                                    if (evidence.EvidenceId % 5 == 0)
-                                    {
-                                        <div class="active item">
-                                           <p class="quote-text">"@evidence.Quote"<cite>- <a href="/Blog/Evidence/@evidence.EvidenceId">@evidence.Title</a></cite></p>
-                                        </div>
-                                    }
-
-                                   else 
-                                    {
-                                        <div class="item">
-                                            <p class="quote-text">"@evidence.Quote"<cite>- <a href="/Blog/Evidence/@evidence.EvidenceId">@evidence.Title</a></cite></p>
-                                        </div>
-
-                                        }
-                                    }
-
+                    @foreach (var evidence in Model.Reverse().Take(6))
+                    {
+                        if (evidence.EvidenceId % 5 == 0)
+                        {
+                            <div class="active item">
+                                <p class="quote-text">"@evidence.Quote"<cite>- <a href="/Blog/Evidence/@evidence.EvidenceId">@evidence.Title</a></cite></p>
                             </div>
-                        </div>
-                        <!-- Client Logo Thumbs-->
-                        <ul class="client-logos">
-                            <!--Till we have speakers column in evidences... future feature-->
-                            @*@foreach (var photo in Model.Reverse().Take(5))
-                            {
-                                <li><a href="/Blog/Evidence/@photo.EvidenceId" class="client-link"><img src="@photo.EvidencePic" class="img-circle" alt="Speaker" width="96" height="96"></a></li>
-                            }*@
-                            <br />
-                            <li><a href="https://en.wikipedia.org/wiki/Golda_Meir" class="client-link"><img src="/img/meir_go.jpg" class="img-circle" alt="Speaker"></a></li>
-                            <li><a href="https://en.wikipedia.org/wiki/Bassem_Eid" class="client-link"><img src="/img/Bassam-Eid.jpg" class="img-circle" alt="Speaker"></a></li>
-                            <li><a href="https://en.wikipedia.org/wiki/Nikki_Haley" class="client-link"><img src="/img/Nikki_Haley.jpg" class="img-circle" alt="Speaker"></a></li>
-                            <li><a href="https://en.wikipedia.org/wiki/Conan_O%27Brien" class="client-link"><img src="/img/conan.jpg" class="img-circle" alt="Speaker"></a></li>
-                            <li><a href="https://en.wikipedia.org/wiki/Mubarak_al_Fadil_al_Mahdi" class="client-link"><img src="/img/MubarkAlFadil.jpg" class="img-circle" alt="Speaker"></a></li>
-                        </ul>
-                    </div>
+                        }
 
-        </div><!-- End Bottom Section -->
+                        else
+                        {
+                            <div class="item">
+                                <p class="quote-text">"@evidence.Quote"<cite>- <a href="/Blog/Evidence/@evidence.EvidenceId">@evidence.Title</a></cite></p>
+                            </div>
 
-    </div> <!-- End Container -->
-
+                        }
+                    }
+                </div>
+            </div>
+            <!-- Client Logo Thumbs-->
+            <ul class="client-logos">
+                <!--Till we have speakers column in evidences... future feature-->
+                @*@foreach (var photo in Model.Reverse().Take(5))
+                    {
+                        <li><a href="/Blog/Evidence/@photo.EvidenceId" class="client-link"><img src="@photo.EvidencePic" class="img-circle" alt="Speaker" width="96" height="96"></a></li>
+                    }*@
+                <br />
+                <li><a href="https://en.wikipedia.org/wiki/Golda_Meir" class="client-link"><img src="/img/meir_go.jpg" class="img-circle" alt="Speaker"></a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Bassem_Eid" class="client-link"><img src="/img/Bassam-Eid.jpg" class="img-circle" alt="Speaker"></a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Nikki_Haley" class="client-link"><img src="/img/Nikki_Haley.jpg" class="img-circle" alt="Speaker"></a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Conan_O%27Brien" class="client-link"><img src="/img/conan.jpg" class="img-circle" alt="Speaker"></a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Mubarak_al_Fadil_al_Mahdi" class="client-link"><img src="/img/MubarkAlFadil.jpg" class="img-circle" alt="Speaker"></a></li>
+            </ul>
+        </div>
+    </div>
     <script>
         function myMap() {
             var mapProp = {
@@ -231,7 +216,6 @@
 
         }
     </script>
-
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7PRVkxVSw6hjmb7u9ofZqLtqTC26IQp0&callback=myMap"></script>
     <script type="text/javascript">
 
@@ -281,27 +265,26 @@
         });
     </script>
     <script type="text/javascript">
-            var news_api = "https://newsapi.org/v1/articles";
-            var apiKey = "0ac3be8cfcb149828743260b027ea0ea";
-            var sources = ["bbc-news", "al-jazeera-english", "cnn"];
-            for (var s in sources) {
-                var source = sources[s];
-                $.get(news_api, {
-                    "apiKey": apiKey,
-                    "source": source
-                }, function (data, status) {
-                    for (var d in data.articles) {
-                        var title = data.articles[d].title;
-                        var publishedAt = data.articles[d].publishedAt;
-                        console.log(title)
-                        console.log(source.toUpperCase())
-                        $("#news_list").append("<li>" + source.toUpperCase() + " : " + title + "</li>")
-                    }
-                })
-            };
+        var news_api = "https://newsapi.org/v1/articles";
+        var apiKey = "0ac3be8cfcb149828743260b027ea0ea";
+        var sources = ["bbc-news", "al-jazeera-english", "cnn"];
+        for (var s in sources) {
+            var source = sources[s];
+            $.get(news_api, {
+                "apiKey": apiKey,
+                "source": source
+            }, function (data, status) {
+                for (var d in data.articles) {
+                    var title = data.articles[d].title;
+                    var publishedAt = data.articles[d].publishedAt;
+                    console.log(title)
+                    console.log(source.toUpperCase())
+                    $("#news_list").append("<li>" + source.toUpperCase() + " : " + title + "</li>")
+                }
+            })
+        };
 
 
     </script>
 </body>
-
 </html>
