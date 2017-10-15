@@ -13,6 +13,7 @@ namespace RIME.Models
         public string Name { get; set; }
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Date{ get; set; }
         [DataType(DataType.MultilineText)]
         public string Content{ get; set; }

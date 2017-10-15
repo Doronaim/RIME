@@ -19,6 +19,7 @@ namespace RIME.Models
         public string Prolog{ get; set; }
         [DataType(DataType.MultilineText)]
         public string Content{ get; set; }
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         public int Likes { get; set; }
         [DataType(DataType.MultilineText)]

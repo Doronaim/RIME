@@ -19,10 +19,10 @@ namespace RIME.Controllers
         {
             var dates = new List<DateTime>
             {
-               new DateTime(2017,1,1,12,5,7,123),
-               new DateTime(2017,4,1,17,5,7,123),
-               new DateTime(2017,6,1,19,5,7,123),
-               new DateTime(2017,8,1,6,5,7,123)
+               new DateTime(2017,1,1),
+               new DateTime(2017,4,1),
+               new DateTime(2017,6,1),
+               new DateTime(2017,8,1),
             };
             var evidences = new List<Evidence>
             {

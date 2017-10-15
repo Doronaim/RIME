@@ -575,9 +575,9 @@ namespace RIME.Controllers
                 db.Evidences.Add(evidence);
                 
                 
-                if (Request.Form[keys[11]] != "")
+                if (Request.Form[keys[10]] != "")
                 {
-                    string[] values = Request.Form[keys[11]].Split(',');
+                    string[] values = Request.Form[keys[10]].Split(',');
                     foreach (var x in values)
                     {
                         Tag tg = new Tag();
@@ -585,7 +585,7 @@ namespace RIME.Controllers
 
                         tg.EvidenceId = db.Evidences.Local[0].EvidenceId;
                         tg.TagName = x;
-                        tg.Categoty = Request.Form[keys[12]];
+                        tg.Categoty = Request.Form[keys[11]];
 
                         db.Tags.Add(tg);
                     }
@@ -807,7 +807,7 @@ namespace RIME.Controllers
                 {
                     return View("400");
                 }
-                return RedirectToAction("EvidenceCommentIndex");
+                return RedirectToAction("EvidenceCommentsIndex");
             }
 
             return View("EvidenceComments/Create", evidenceComment);
